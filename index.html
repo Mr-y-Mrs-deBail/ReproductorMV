@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="title" content="ReproductorMV" />
+    <meta name="description" content="Escucha tu linda música, libre de anuncios Uyyyy." />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://metatags.io/" />
+    <meta property="og:title" content="ReproductorMV" />
+    <meta property="og:description" content="Escucha tu linda música, libre de anuncios Uyyyy." />
+    <!-- <meta property="og:url" /> -->
+    <meta property="og:image" content="https://i.pinimg.com/736x/6b/bf/e3/6bbfe31236bb551b7e6d260b7919c04f.jpg" />
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://metatags.io/" />
+    <meta property="twitter:title" content="ReproductorMV" />
+    <meta property="twitter:description" content="Escucha tu linda música, libre de anuncios Uyyyy." />
+    <meta property="twitter:image" content="https://i.pinimg.com/736x/6b/bf/e3/6bbfe31236bb551b7e6d260b7919c04f.jpg" />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="img/icono.png">
+    <title>ReproductorMV</title>
+</head>
+<body>
+
+    <div class="light colors1"></div>
+    <div class="light colors2"></div>
+    <div class="light colors3"></div>
+    <div class="light colors4"></div>
+    <div class="light colors5"></div>
+    <div class="light colors6"></div>
+    <div class="light colors7"></div>
+    <div class="light colors8"></div>
+    <div class="light colors9"></div>
+    <div class="light colors10"></div>
+    <div class="light colors11"></div>
+    <div class="light colors12"></div>
+    <div class="light colors13"></div>
+    <div class="light colors14"></div>
+    <div class="light colors15"></div>
+    <div class="light colors16"></div>
+    <div class="light colors17"></div>
+    <div class="light colors18"></div>
+    <div class="light colors19"></div>
+    <div class="light colors20"></div>
+    <div class="light colors21"></div>
+    <div class="light colors22"></div>
+    <div class="light colors23"></div>
+    <div class="light colors24"></div>
+    <div class="light colors25"></div>
+    
+    <div class="d-flex align-items-center justify-content-center min-vh-100 mb-5">
+        <div class="container mt-5">
+            <div class="wrapper">
+                <div class="top-bar d-flex justify-content-between align-items-center">
+                    <i id="expand-more" class="material-icons">expand_more</i>
+                    <div id="search-container" class="search-container">
+                        <input type="text" id="search-input" placeholder="Buscar...">
+                        <i class="material-icons" id="close-search">close</i>
+                    </div>                    
+                    
+                    <div class="dropdown">
+                        <i class="material-icons" id="more-options">more_horiz</i>
+                        <div class="dropdown-content">
+                            <a href="#" id="add-to-playlist">Agregar a una playlist <span class="material-icons">add</span></a>
+                            <a href="#" id="more-artist">Más de este artista <span class="material-icons">sentiment_very_satisfied</span></a>
+                            <a href="#" id="search-option">Buscar <span class="material-icons">search</span></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="suggestions-container" class="suggestions-container"></div>
+                
+                <div class="img-area mt-3">
+                    <img src="img/music-1.jpg" class="img-fluid" alt="imgMV">
+                </div>
+
+                <div class="song-details text-center mt-3">
+                    <p class="name"></p>
+                    <p class="artist"></p>
+                </div>
+
+                <div class="progress-area mt-3">
+                    <div class="progress-bar">
+                        <audio id="main-audio" src=""></audio>
+                    </div>
+                    
+                    <div class="song-timer d-flex justify-content-between mt-2">
+                        <span class="current-time">0:00</span>
+                        <span class="max-duration">0:00</span>
+                    </div>
+                </div>
+
+                <div class="controls d-flex justify-content-around align-items-center mt-4 mb-2">
+                    <i id="repeat-plist" class="material-icons" title="Playlist looped">repeat</i>
+                    <i id="prev" class="material-icons">skip_previous</i>
+                    <div class="play-pause">
+                        <i class="material-icons play">play_arrow</i>
+                    </div>
+                    <i id="next" class="material-icons">skip_next</i>
+                    <i id="more-music" class="material-icons">queue_music</i>
+                </div>
+
+                <div class="music-list mt-3">
+                    <div class="header d-flex justify-content-between align-items-center">
+                        <div class="row">
+                            <span><img class="dance" src="img/baile.gif" alt="gif"> Todas las canciones</span>
+                        </div>
+                        <i id="close" class="material-icons">close</i>
+                    </div>
+                    <ul> <!-- Código js --> </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/music-list.js"></script>
+    <script src="js/script.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    
+    <script>
+        document.getElementById("expand-more").addEventListener("click", () => {
+            Swal.fire({
+                imageUrl: 'img/img-1.png',  
+                imageAlt: 'img',
+                imageWidth: '250px',
+                background: "black",
+                confirmButtonText: 'Continuar',
+                confirmButtonColor: '#4325ebb7',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+            });
+        });
+    </script>
+    
+    <script>
+        document.getElementById("add-to-playlist").addEventListener("click", () => {
+            Swal.fire({
+                imageUrl: 'img/img-2.jpg',  
+                imageAlt: 'img',
+                imageWidth: '270px',
+                background: "black",
+                confirmButtonText: '¡Muy bien!',
+                confirmButtonColor: 'blue',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,  
+            });
+        });
+    </script>
+    
+    <script>
+        document.getElementById("more-artist").addEventListener("click", () => {
+            Swal.fire({
+                imageUrl: 'img/img-3.png',  
+                imageAlt: 'img',
+                imageWidth: '270px',
+                background: "black",
+                confirmButtonText: '¡Muy bien mi reina!',
+                confirmButtonColor: 'blue',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,            
+            });
+        });
+    </script>
+
+</body>
+</html>
