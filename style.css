@@ -30,6 +30,8 @@ body {
     background-color: black; 
 }
 
+/* Reproductor de música principal */
+
 .wrapper { 
     width: 360px; 
     padding: 25px 30px; 
@@ -46,6 +48,8 @@ body {
 .wrapper i { 
     cursor: pointer; 
 }
+
+/* Buscador, más de este artista, etc */
 
 .dropdown {
     position: relative;
@@ -93,19 +97,22 @@ body {
     background-color: #f1f1f1;
 }
 
-.search-container {
+/* Buscador principal */
+
+.search-container-principal {
     width: 100%;
     display: none;
-    transition: opacity 0.5s ease, transform 0.5s ease; /* Añadir transiciones */
+    transition: opacity 0.5s ease, transform 0.5s ease;
     justify-content: center;
     align-items: center;
 }
 
-#search-input {
+#search-input-principal {
     font-size: 14px;
     background: transparent;
     color: white;
     width: 85%;
+    margin-left: 23px;
     padding: 8px;   
     border-radius: 28px;
     border: 1px solid #ccc;
@@ -116,7 +123,7 @@ body {
     cursor: pointer;
 }
 
-.show-search #search-container {
+.show-search #search-container-principal {
     display: flex;
 }
 
@@ -127,10 +134,10 @@ body {
 
 .show-search #close-search {
     display: block;
+    margin-left: 20px;
 }
 
-/* Estilos para sugerencias */
-
+/* Sugerencias */
 .suggestions-container {
     display: none;
     font-size: 13.7px;
@@ -142,8 +149,7 @@ body {
     z-index: 1;
     border-radius: 10px;
     overflow-y: auto;
-    overflow-y: auto;
-    overflow-x: hidden; 
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -154,6 +160,10 @@ body {
 
 .suggestion-item:hover {
     background-color: #f1f1f1;
+}
+
+.suggestion-item strong {
+    color: #000;
 }
 
 /* Barra de música, progress, time, controls, list, etc. */
@@ -232,12 +242,16 @@ body {
     line-height: 15px; 
 } 
 
+/* Barra de progreso */
+
 .progress-area { 
     height: 6px; 
     width: 100%; 
     border-radius: 50px; 
     background: #f0f0f0; 
-    cursor: pointer; 
+    cursor: pointer;
+    position: relative;
+    overflow: visible; 
 }
 
 .progress-area .progress-bar { 
@@ -246,29 +260,22 @@ body {
     position: relative; 
     border-radius: inherit; 
     background: linear-gradient(90deg, var(--aqualight) 0%, var(--aqua) 100%);
+    overflow: visible;
 }
 
 .progress-bar::before { 
     content: ""; 
     position: absolute; 
-    height: 12px; 
-    width: 12px; 
+    height: 20px; 
+    width: 20px; 
     border-radius: 50%; 
     top: 50%; 
-    right: -5px; 
+    right: -10px;   
+    cursor: pointer; 
+    transform: translateY(-50%);
+    background: var(--aqua); 
     z-index: 2; 
-    opacity: 0; 
-    pointer-events: none; 
-    transform: translateY(-50%); 
-    background: inherit; 
-    transition: 
-    opacity 0.2s ease; 
 }
-
-.progress-area:hover .progress-bar::before { 
-    opacity: 1; 
-    pointer-events: auto; 
-} 
 
 .progress-area .song-timer { 
     margin-top: 2px; 
@@ -340,6 +347,8 @@ body {
     -webkit-text-fill-color: transparent; 
     position: absolute; 
 }
+
+/* Lista de canciones */
 
 .music-list { 
     position: absolute; 
@@ -453,9 +462,10 @@ ul li.playing {
 }
 
 .dance {
-    width: 30px;
-    margin-top: -20px;
+    width: 35px;
+    margin-top: -10px;
 }
+
 
 /* Fondo */
 

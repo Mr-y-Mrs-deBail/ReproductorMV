@@ -54,46 +54,40 @@
     
     <div class="d-flex align-items-center justify-content-center min-vh-100 mb-5">
         <div class="container mt-5">
-            <div class="wrapper">
+            <div id="default-view" class="wrapper">
                 <div class="top-bar d-flex justify-content-between align-items-center">
                     <i id="expand-more" class="material-icons">expand_more</i>
-                    <div id="search-container" class="search-container">
-                        <input type="text" id="search-input" placeholder="Buscar...">
+                    <div id="search-container-principal" class="search-container-principal">
+                        <input type="text" id="search-input-principal" placeholder="Buscar...">
                         <i class="material-icons" id="close-search">close</i>
-                    </div>                    
-                    
+                    </div>
                     <div class="dropdown">
                         <i class="material-icons" id="more-options">more_horiz</i>
                         <div class="dropdown-content">
-                            <a href="#" id="add-to-playlist">Agregar a una playlist <span class="material-icons">add</span></a>
-                            <a href="#" id="more-artist">Más de este artista <span class="material-icons">sentiment_very_satisfied</span></a>
+                            <!-- <a href="#" id="add-to-playlist"> <span class="material-icons">add</span></a> -->
+                            <a href="#" id="more-artist">Más de este artista <span class="material-icons">add</span></a>
                             <a href="#" id="search-option">Buscar <span class="material-icons">search</span></a>
                         </div>
                     </div>
                 </div>
-
-                <div id="suggestions-container" class="suggestions-container"></div>
-                
+                <div id="suggestions-container-principal" class="suggestions-container"></div>
                 <div class="img-area mt-3">
                     <img src="img/music-1.jpg" class="img-fluid" alt="imgMV">
                 </div>
-
                 <div class="song-details text-center mt-3">
                     <p class="name"></p>
                     <p class="artist"></p>
                 </div>
-
                 <div class="progress-area mt-3">
                     <div class="progress-bar">
                         <audio id="main-audio" src=""></audio>
                     </div>
-                    
                     <div class="song-timer d-flex justify-content-between mt-2">
                         <span class="current-time">0:00</span>
                         <span class="max-duration">0:00</span>
                     </div>
                 </div>
-
+                
                 <div class="controls d-flex justify-content-around align-items-center mt-4 mb-2">
                     <i id="repeat-plist" class="material-icons" title="Playlist looped">repeat</i>
                     <i id="prev" class="material-icons">skip_previous</i>
@@ -103,7 +97,7 @@
                     <i id="next" class="material-icons">skip_next</i>
                     <i id="more-music" class="material-icons">queue_music</i>
                 </div>
-
+                
                 <div class="music-list mt-3">
                     <div class="header d-flex justify-content-between align-items-center">
                         <div class="row">
@@ -114,9 +108,34 @@
                     <ul> <!-- Código js --> </ul>
                 </div>
             </div>
+
+          <!-- Ventana del Reproductor 2 -->
+            <!-- <div id="expanded-view" class="wrapper" style="display: none;">
+                <i id="keyboard-up" class="material-icons">keyboard_arrow_up</i>
+                <div class="container mt-2 d-flex flex-column min-vh-100 mb-5">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div class="search-container-secundario">
+                            <input type="text" id="search-input-secundario" placeholder="Buscar...">
+                            <div id="suggestions-container-secundario" class="suggestions-container-secundario"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="horizontal-list mt-3">
+                        <span class="tab selected" onclick="selectTab(this, 'songs-list')">Canciones</span>
+                        <span class="tab" onclick="selectTab(this, 'artists-list')">Artistas</span>
+                        <span class="tab" onclick="selectTab(this, 'folders-list')">Carpetas</span>
+                    </div>
+                    
+                    <div id="songs-list" class="songs-list"></div> 
+                    <div id="artists-list" class="artists-list" style="display: none;"></div> 
+                    <div id="folders-list" class="folders-list" style="display: none;"></div>
+                </div>
+            </div> -->
         </div>
     </div>
 
+    <!-- Código js -->
+    
     <script src="js/music-list.js"></script>
     <script src="js/script.js"></script>
 
@@ -124,55 +143,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-    
+
+
     <script>
         document.getElementById("expand-more").addEventListener("click", () => {
             Swal.fire({
-                imageUrl: 'img/img-1.png',  
-                imageAlt: 'img',
-                imageWidth: '250px',
-                background: "black",
-                confirmButtonText: 'Continuar',
-                confirmButtonColor: '#4325ebb7',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                allowEnterKey: false,
-            });
-        });
-    </script>
-    
-    <script>
-        document.getElementById("add-to-playlist").addEventListener("click", () => {
-            Swal.fire({
-                imageUrl: 'img/img-2.jpg',  
+                imageUrl: 'img/img-1.jpg',  
                 imageAlt: 'img',
                 imageWidth: '270px',
-                background: "black",
+                background: "",
                 confirmButtonText: '¡Muy bien!',
-                confirmButtonColor: 'blue',
+                confirmButtonColor: 'black',
                 allowOutsideClick: false,
                 allowEscapeKey: false,
                 allowEnterKey: false,  
             });
         });
-    </script>
-    
-    <script>
-        document.getElementById("more-artist").addEventListener("click", () => {
-            Swal.fire({
-                imageUrl: 'img/img-3.png',  
-                imageAlt: 'img',
-                imageWidth: '270px',
-                background: "black",
-                confirmButtonText: '¡Muy bien mi reina!',
-                confirmButtonColor: 'blue',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                allowEnterKey: false,            
-            });
-        });
-    </script>
+    </script> 
 
 </body>
 </html>

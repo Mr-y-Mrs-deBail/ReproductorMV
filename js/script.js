@@ -1,7 +1,4 @@
-//js para dropdown
-
-//Control del Dropdown
-
+//Dropdown
 document.getElementById("more-options").addEventListener("click", function() {
     var dropdownContent = document.querySelector(".dropdown-content");
     var icon = document.getElementById("more-options");
@@ -40,22 +37,22 @@ document.getElementById("search-option").addEventListener("click", function() {
 
 document.getElementById("close-search").addEventListener("click", function() {
     document.querySelector(".wrapper").classList.remove("show-search");
-    document.getElementById("search-input").value = ''; // Limpiar el campo de búsqueda
-    document.getElementById("suggestions-container").style.display = 'none'; // Ocultar sugerencias
+    document.getElementById("search-input-principal").value = ''; // Limpiar el campo de búsqueda
+    document.getElementById("suggestions-container-principal").style.display = 'none'; // Ocultar sugerencias
 });
 
-document.getElementById("search-input").addEventListener("input", function() {
+document.getElementById("search-input-principal").addEventListener("input", function() {
     const searchQuery = this.value.toLowerCase();
-    const suggestionsContainer = document.getElementById("suggestions-container");
-    
+    const suggestionsContainer = document.getElementById("suggestions-container-principal");
+
     if (searchQuery.length === 0) {
         suggestionsContainer.style.display = 'none';
         return;
     }
 
     suggestionsContainer.innerHTML = '';
-    const filteredSongs = allMusic.filter(song => 
-        song.name.toLowerCase().includes(searchQuery) || 
+    const filteredSongs = allMusic.filter(song =>
+        song.name.toLowerCase().includes(searchQuery) ||
         song.artist.toLowerCase().includes(searchQuery)
     );
 
@@ -64,13 +61,14 @@ document.getElementById("search-input").addEventListener("input", function() {
             const suggestionItem = document.createElement('div');
             suggestionItem.classList.add('suggestion-item');
 
-            if (isCurrentSong(song.name)) {
+            // Resaltar la canción actual si está en la lista filtrada
+            if (isCurrentSong(song.name, song.artist)) {
                 suggestionItem.innerHTML = `<strong>${song.name} - ${song.artist}</strong>`;
             } else {
                 suggestionItem.innerHTML = `${song.name} - ${song.artist}`;
             }
 
-            suggestionItem.addEventListener("click", () => selectSongByName(song.name));
+            suggestionItem.addEventListener("click", () => selectSongByName(song.name, song.artist));
             suggestionsContainer.appendChild(suggestionItem);
         });
         suggestionsContainer.style.display = 'block';
@@ -79,24 +77,71 @@ document.getElementById("search-input").addEventListener("input", function() {
     }
 });
 
-function selectSongByName(songName) {
-    const songIndex = allMusic.findIndex(song => song.name.toLowerCase() === songName.toLowerCase());
+function selectSongByName(songName, songArtist) {
+    const songIndex = allMusic.findIndex(song => song.name.toLowerCase() === songName.toLowerCase() && song.artist.toLowerCase() === songArtist.toLowerCase());
     if (songIndex !== -1) {
-        loadMusic(songIndex);
+        musicIndex = songIndex;
+        loadMusic(musicIndex);
         playMusic();
         updatePlayingSong();
         document.querySelector(".wrapper").classList.remove("show-search");
-        document.getElementById("suggestions-container").style.display = 'none';
-        document.getElementById("search-input").value = ''; // Limpiar el campo de búsqueda
+        document.getElementById("suggestions-container-principal").style.display = 'none';
+        document.getElementById("search-input-principal").value = ''; // Limpiar el campo de búsqueda
     }
 }
 
-function isCurrentSong(songName) {
-    const currentLi = ulTag.querySelector(`li[li-index="${musicIndex + 1}"]`);
-    return currentLi && currentLi.querySelector("span").innerText.toLowerCase() === songName.toLowerCase();
+function isCurrentSong(songName, songArtist) {
+    return musicName.innerHTML.toLowerCase().includes(songName.toLowerCase()) && musicArtist.innerText.toLowerCase().includes(songArtist.toLowerCase());
 }
 
-// Reproductor de música
+function updatePlayingSong() {
+    // Actualizar estado en la lista principal
+    const allLiTags = ulTag.querySelectorAll("li");
+    allLiTags.forEach((li) => {
+        li.classList.remove("playing");
+        const audioTag = li.querySelector(".audio-duration");
+        if (audioTag) {
+            audioTag.innerText = "";
+        }
+        const nameTag = li.querySelector("span");
+        const artistTag = li.querySelector("p");
+        if (nameTag) {
+            nameTag.style.fontWeight = "normal";
+        }
+        if (artistTag) {
+            artistTag.style.fontWeight = "normal";
+        }
+    });
+
+    const currentLi = ulTag.querySelector(`li[li-index="${musicIndex}"]`);
+    if (currentLi) {
+        currentLi.classList.add("playing");
+        const currentNameTag = currentLi.querySelector("span");
+        const currentArtistTag = currentLi.querySelector("p");
+        currentNameTag.style.fontWeight = "bold";
+        currentArtistTag.style.fontWeight = "bold";
+    }
+
+    // Actualizar estado en el buscador principal
+    const suggestionsContainerPrincipal = document.getElementById("suggestions-container-principal");
+    const suggestionItemsPrincipal = suggestionsContainerPrincipal.querySelectorAll(".suggestion-item");
+    suggestionItemsPrincipal.forEach((item) => {
+        item.classList.remove("playing");
+        item.innerHTML = item.innerText; // Restablecer estilo por defecto
+    });
+
+    suggestionItemsPrincipal.forEach((item) => {
+        const songName = musicName.innerHTML;
+        const songArtist = musicArtist.innerText;
+        if (item.innerText.includes(songName) && item.innerText.includes(songArtist)) {
+            item.innerHTML = `<strong>${songName} - ${songArtist}</strong>`;
+            item.classList.add("playing");
+        }
+    });
+}
+
+// Reproductor de música ____________________________________________________________________________________________________________
+
 const wrapper = document.querySelector(".wrapper"),
     imgArea = document.querySelector(".img-area"),
     musicImg = imgArea.querySelector("img"),
@@ -106,17 +151,18 @@ const wrapper = document.querySelector(".wrapper"),
     prevBtn = document.querySelector("#prev"),
     nextBtn = document.querySelector("#next"),
     mainAudio = wrapper.querySelector("#main-audio"),
-    progressArea = wrapper.querySelector(".progress-area"),
+    progressArea = document.querySelector(".progress-area"),
     progressBar = progressArea.querySelector(".progress-bar"),
-    musicList = wrapper.querySelector(".music-list"),
+    repeatBtn = document.querySelector("#repeat-plist"),
+    musicList = document.querySelector(".music-list"),
     moreMusicBtn = document.querySelector("#more-music"),
     closeMoreMusic = musicList.querySelector("#close"),
-    repeatBtn = document.querySelector("#repeat-plist"),
+    moreArtistBtn = document.querySelector("#more-artist"),
     ulTag = wrapper.querySelector("ul");
 
 let musicIndex = Math.floor(Math.random() * allMusic.length);
 let isMusicPaused = true;
-let isShuffle = false; // Variable para controlar el modo shuffle
+let isShuffle = false;
 
 // Ordena alfabéticamente los nombres de las canciones
 allMusic.sort((a, b) => a.name.localeCompare(b.name));
@@ -124,6 +170,7 @@ allMusic.sort((a, b) => a.name.localeCompare(b.name));
 window.addEventListener("load", () => {
     loadMusic(musicIndex);
     updatePlayingSong();
+    displayAllSongs();
 });
 
 function loadMusic(index) {
@@ -154,7 +201,6 @@ playPauseBtn.addEventListener("click", () => {
     isPlaying ? pauseMusic() : playMusic();
 });
 
-
 prevBtn.addEventListener("click", prevMusic);
 nextBtn.addEventListener("click", nextMusic);
 
@@ -184,7 +230,6 @@ mainAudio.addEventListener("timeupdate", (e) => {
     if (mainAudio.duration) {
         const progressWidth = (e.target.currentTime / mainAudio.duration) * 100;
         progressBar.style.width = `${progressWidth}%`;
-
         updateCurrentTime(e.target.currentTime);
     }
 });
@@ -204,7 +249,8 @@ mainAudio.addEventListener("loadeddata", () => {
 progressArea.addEventListener("click", (e) => {
     const progressWidth = progressArea.clientWidth;
     const clickedOffsetX = e.offsetX;
-    mainAudio.currentTime = (clickedOffsetX / progressWidth) * mainAudio.duration;
+    const newTime = (clickedOffsetX / progressWidth) * mainAudio.duration;
+    mainAudio.currentTime = newTime;
     playMusic();
     updatePlayingSong();
 });
@@ -216,13 +262,11 @@ repeatBtn.addEventListener("click", () => {
             repeatBtn.setAttribute("title", "Song looped");
             isShuffle = false;
             break;
-
         case "repeat_one":
             repeatBtn.innerText = "shuffle";
             repeatBtn.setAttribute("title", "Playback shuffled");
             isShuffle = true;
             break;
-
         case "shuffle":
             repeatBtn.innerText = "repeat";
             repeatBtn.setAttribute("title", "Playlist looped");
@@ -253,7 +297,19 @@ function shuffleMusic() {
     updatePlayingSong();
 }
 
+// Lista de canciones
+const gifNames = ["baile", "baile2", "baile3", "baile4", "baile5", "baile6", "baile7"];
+
+function changeGif() {
+    const randomIndex = Math.floor(Math.random() * gifNames.length);
+    const gifName = gifNames[randomIndex];
+    const danceGif = document.querySelector(".dance");
+    danceGif.src = `img/${gifName}.gif`;
+}
+
 moreMusicBtn.addEventListener("click", () => {
+    changeGif();
+    displayAllSongs();
     musicList.classList.toggle("show");
 });
 
@@ -261,31 +317,52 @@ closeMoreMusic.addEventListener("click", () => {
     musicList.classList.remove("show");
 });
 
-allMusic.forEach((song, index) => {
-    const liTag = `<li li-index="${index + 1}">
-        <div class="row">
-            <span>${song.name}</span>
-            <p>${song.artist}</p>
-        </div>
-        <span id="${song.src}" class="audio-duration">3:40</span>
-        <audio class="${song.src}" src="songs/${song.src}.mp3"></audio>
-    </li>`;
+moreArtistBtn.addEventListener("click", () => {
+    const currentArtist = musicArtist.innerText;
+    displayArtistSongs(currentArtist);
+});
 
-    ulTag.insertAdjacentHTML("beforeend", liTag);
+// bold para las canciones
 
-    const liAudioTag = ulTag.querySelector(`.${song.src}`);
-    liAudioTag.addEventListener("loadeddata", () => {
-        const duration = liAudioTag.duration;
-        const totalMin = Math.floor(duration / 60);
-        const totalSec = Math.floor(duration % 60).toString().padStart(2, "0");
-        const durationTag = ulTag.querySelector(`#${song.src}`);
-        durationTag.innerText = `${totalMin}:${totalSec}`;
-        durationTag.setAttribute("t-duration", `${totalMin}:${totalSec}`);
+function displayAllSongs() {
+    ulTag.innerHTML = "";
+    allMusic.forEach((song, index) => {
+        const liTag = `<li li-index="${index + 1}">
+            <div class="row">
+                <span>${song.name}</span>
+                <p>${song.artist}</p>
+            </div>
+            <audio class="${song.src}" src="songs/${song.src}.mp3"></audio>
+        </li>`;
+        ulTag.insertAdjacentHTML("beforeend", liTag);
+
+        const liItem = ulTag.querySelector(`li[li-index="${index + 1}"]`);
+        liItem.addEventListener("click", () => selectSong(liItem));
+    });
+    updatePlayingSong();
+}
+
+function displayArtistSongs(artist) {
+    const filteredSongs = allMusic.filter(song => song.artist === artist);
+    ulTag.innerHTML = "";
+    filteredSongs.forEach((song, index) => {
+        const originalIndex = allMusic.findIndex(s => s.name === song.name && s.artist === song.artist);
+        const liTag = `<li li-index="${originalIndex + 1}">
+            <div class="row">
+                <span>${song.name}</span>
+                <p>${song.artist}</p>
+            </div>
+            <audio class="${song.src}" src="songs/${song.src}.mp3"></audio>
+        </li>`;
+        ulTag.insertAdjacentHTML("beforeend", liTag);
+
+        const liItem = ulTag.querySelector(`li[li-index="${originalIndex + 1}"]`);
+        liItem.addEventListener("click", () => selectSong(liItem));
     });
 
-    const liItem = ulTag.querySelector(`li[li-index="${index + 1}"]`);
-    liItem.addEventListener("click", () => selectSong(liItem));
-});
+    musicList.classList.add("show");
+    updatePlayingSong();
+}
 
 function selectSong(element) {
     musicIndex = element.getAttribute("li-index") - 1;
@@ -294,25 +371,81 @@ function selectSong(element) {
     updatePlayingSong();
 }
 
+// función bold ___________________________________________________________________________________________________________
+
 function updatePlayingSong() {
     const allLiTags = ulTag.querySelectorAll("li");
+
     allLiTags.forEach((li) => {
         li.classList.remove("playing");
-        const audioTag = li.querySelector(".audio-duration");
-        const songDuration = audioTag.getAttribute("t-duration");
-        audioTag.innerText = songDuration;
         const nameTag = li.querySelector("span");
         const artistTag = li.querySelector("p");
-        nameTag.style.fontWeight = "normal";
-        artistTag.style.fontWeight = "normal"; 
+        if (nameTag) {
+            nameTag.style.fontWeight = "normal";
+        }
+        if (artistTag) {
+            artistTag.style.fontWeight = "normal";
+        }
     });
 
     const currentLi = ulTag.querySelector(`li[li-index="${musicIndex + 1}"]`);
-    currentLi.classList.add("playing");
-    const currentAudioTag = currentLi.querySelector(".audio-duration");
-    currentAudioTag.innerText = "";
-    const currentNameTag = currentLi.querySelector("span");
-    const currentArtistTag = currentLi.querySelector("p");
-    currentNameTag.style.fontWeight = "bold";
-    currentArtistTag.style.fontWeight = "bold";
+    if (currentLi) {
+        currentLi.classList.add("playing");
+        const currentNameTag = currentLi.querySelector("span");
+        const currentArtistTag = currentLi.querySelector("p");
+        if (currentNameTag) {
+            currentNameTag.style.fontWeight = "bold";
+        }
+        if (currentArtistTag) {
+            currentArtistTag.style.fontWeight = "bold";
+        }
+    }
+
+    const moreArtistList = document.querySelector(".more-artist-list ul");
+    if (moreArtistList) {
+        const artistLiTags = moreArtistList.querySelectorAll("li");
+
+        artistLiTags.forEach((li) => {
+            li.classList.remove("playing");
+            const nameTag = li.querySelector("span");
+            const artistTag = li.querySelector("p");
+            if (nameTag) {
+                nameTag.style.fontWeight = "normal";
+            }
+            if (artistTag) {
+                artistTag.style.fontWeight = "normal";
+            }
+        });
+
+        const currentArtistLi = moreArtistList.querySelector(`li[li-index="${musicIndex + 1}"]`);
+        if (currentArtistLi) {
+            currentArtistLi.classList.add("playing");
+            const currentArtistNameTag = currentArtistLi.querySelector("span");
+            const currentArtistArtistTag = currentArtistLi.querySelector("p");
+            if (currentArtistNameTag) {
+                currentArtistNameTag.style.fontWeight = "bold";
+            }
+            if (currentArtistArtistTag) {
+                currentArtistArtistTag.style.fontWeight = "bold";
+            }
+        }
+    }
+
+    // Actualizar sugerencias en el buscador
+    const suggestionsContainer = document.getElementById("suggestions-container");
+    if (suggestionsContainer) {
+        const suggestionItems = suggestionsContainer.querySelectorAll(".suggestion-item");
+        suggestionItems.forEach((item) => {
+            item.classList.remove("playing");
+            item.innerHTML = item.innerText; // Restablecer el estilo por defecto
+        });
+
+        const currentSuggestionItem = suggestionsContainer.querySelector(`.suggestion-item[li-index="${musicIndex + 1}"]`);
+        if (currentSuggestionItem) {
+            currentSuggestionItem.classList.add("playing");
+            const songName = musicName.innerHTML;
+            const songArtist = musicArtist.innerText;
+            currentSuggestionItem.innerHTML = `<strong>${songName} - ${songArtist}</strong>`;
+        }
+    }
 }
