@@ -41,7 +41,16 @@ document.getElementById("close-search").addEventListener("click", function() {
     document.getElementById("suggestions-container-principal").style.display = 'none'; // Ocultar sugerencias
 });
 
-document.getElementById("search-input-principal").addEventListener("input", function() {
+// Debounce Function
+function debounce(func, delay) {
+    let timer;
+    return function(...args) {
+        clearTimeout(timer);
+        timer = setTimeout(() => func.apply(this, args), delay);
+    };
+}
+
+document.getElementById("search-input-principal").addEventListener("input", debounce(function() {
     const searchQuery = this.value.toLowerCase();
     const suggestionsContainer = document.getElementById("suggestions-container-principal");
 
@@ -75,7 +84,7 @@ document.getElementById("search-input-principal").addEventListener("input", func
     } else {
         suggestionsContainer.style.display = 'none';
     }
-});
+}, 300)); // Delay de 300ms
 
 function selectSongByName(songName, songArtist) {
     const songIndex = allMusic.findIndex(song => song.name.toLowerCase() === songName.toLowerCase() && song.artist.toLowerCase() === songArtist.toLowerCase());
@@ -140,6 +149,47 @@ function updatePlayingSong() {
     });
 }
 
+// Controles de la pestaña ________________________________________________________________________________________________________
+
+if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: musicName.innerHTML,
+        artist: musicArtist.innerText,
+        album: '',
+        artwork: [
+            { src: 'img/${allMusic[musicIndex].img}.jpg', sizes: '96x96', type: 'image/jpeg' },
+            { src: 'img/${allMusic[musicIndex].img}.jpg', sizes: '128x128', type: 'image/jpeg' },
+            { src: 'img/${allMusic[musicIndex].img}.jpg', sizes: '192x192', type: 'image/jpeg' },
+            { src: 'img/${allMusic[musicIndex].img}.jpg', sizes: '256x256', type: 'image/jpeg' },
+            { src: 'img/${allMusic[musicIndex].img}.jpg', sizes: '384x384', type: 'image/jpeg' },
+            { src: 'img/${allMusic[musicIndex].img}.jpg', sizes: '512x512', type: 'image/jpeg' }
+        ]
+    });
+
+    navigator.mediaSession.setActionHandler('play', () => {
+        playMusic();
+        navigator.mediaSession.playbackState = 'playing';
+    });
+
+    navigator.mediaSession.setActionHandler('pause', () => {
+        pauseMusic();
+        navigator.mediaSession.playbackState = 'paused';
+    });
+
+    navigator.mediaSession.setActionHandler('previoustrack', () => {
+        prevMusic();
+    });
+
+    navigator.mediaSession.setActionHandler('nexttrack', () => {
+        nextMusic();
+    });
+
+    function updateMetadata() {
+        navigator.mediaSession.metadata.title = musicName.innerHTML;
+        navigator.mediaSession.metadata.artist = musicArtist.innerText;
+    }
+}
+
 // Reproductor de música ____________________________________________________________________________________________________________
 
 const wrapper = document.querySelector(".wrapper"),
@@ -157,12 +207,15 @@ const wrapper = document.querySelector(".wrapper"),
     musicList = document.querySelector(".music-list"),
     moreMusicBtn = document.querySelector("#more-music"),
     closeMoreMusic = musicList.querySelector("#close"),
-    moreArtistBtn = document.querySelector("#more-artist"),
     ulTag = wrapper.querySelector("ul");
 
 let musicIndex = Math.floor(Math.random() * allMusic.length);
 let isMusicPaused = true;
 let isShuffle = false;
+
+// Variables para Lazy Loading
+let loadedSongs = 20; // Número inicial de canciones para cargar
+const increment = 20; // Número de canciones para cargar cada vez
 
 // Ordena alfabéticamente los nombres de las canciones
 allMusic.sort((a, b) => a.name.localeCompare(b.name));
@@ -297,10 +350,20 @@ function shuffleMusic() {
     updatePlayingSong();
 }
 
-// Mouse
+// Mouse ___________________________________________________________________________
 
 let isDragging = false;
 
+function updateProgress(e) {
+    const progressWidth = progressArea.clientWidth;
+    const offsetX = e.touches ? e.touches[0].clientX - progressArea.getBoundingClientRect().left : e.offsetX;
+    const newTime = (offsetX / progressWidth) * mainAudio.duration;
+    mainAudio.currentTime = newTime;
+    const progressPercentage = (mainAudio.currentTime / mainAudio.duration) * 100;
+    progressBar.style.width = `${progressPercentage}%`;
+}
+
+// Mouse Events
 progressArea.addEventListener('mousedown', (e) => {
     isDragging = true;
     updateProgress(e);
@@ -316,14 +379,19 @@ progressArea.addEventListener('mouseup', () => {
     isDragging = false;
 });
 
+progressArea.addEventListener('mouseleave', () => {
+    isDragging = false;
+});
+
+// Touch Events
 progressArea.addEventListener('touchstart', (e) => {
     isDragging = true;
-    updateProgress(e.touches[0]);
+    updateProgress(e);
 });
 
 progressArea.addEventListener('touchmove', (e) => {
     if (isDragging) {
-        updateProgress(e.touches[0]);
+        updateProgress(e);
     }
 });
 
@@ -331,17 +399,8 @@ progressArea.addEventListener('touchend', () => {
     isDragging = false;
 });
 
-function updateProgress(e) {
-    const progressWidth = progressArea.clientWidth;
-    const clickedOffsetX = e.offsetX;
-    const newTime = (clickedOffsetX / progressWidth) * mainAudio.duration;
-    mainAudio.currentTime = newTime;
-
-    const progressPercentage = (mainAudio.currentTime / mainAudio.duration) * 100;
-    progressBar.style.width = `${progressPercentage}%`;
-}
-
 // Lista de canciones
+
 const gifNames = ["baile", "baile2", "baile3", "baile4", "baile5", "baile6", "baile7", "baile8"];
 
 function changeGif() {
@@ -361,53 +420,43 @@ closeMoreMusic.addEventListener("click", () => {
     musicList.classList.remove("show");
 });
 
-moreArtistBtn.addEventListener("click", () => {
-    const currentArtist = musicArtist.innerText;
-    displayArtistSongs(currentArtist);
-});
-
 function displayAllSongs() {
     ulTag.innerHTML = "";
-    allMusic.forEach((song, index) => {
-        const liTag = `<li li-index="${index + 1}">
+    loadedSongs = 20; // Resetear el contador
+    loadMoreSongs(); // Cargar las primeras canciones
+    updatePlayingSong(); // Actualizar la canción en reproducción
+}
+
+function loadMoreSongs() {
+    const totalSongs = allMusic.length;
+    const start = loadedSongs;
+    const end = Math.min(loadedSongs + increment, totalSongs);
+    const fragment = document.createDocumentFragment();
+
+    for (let i = start; i < end; i++) {
+        const song = allMusic[i];
+        const liTag = document.createElement('li');
+        liTag.setAttribute('li-index', i + 1);
+        liTag.innerHTML = `
             <div class="row">
                 <span>${song.name}</span>
                 <p>${song.artist}</p>
             </div>
             <audio class="${song.src}" src="songs/${song.src}.mp3"></audio>
-        </li>`;
-        ulTag.insertAdjacentHTML("beforeend", liTag);
+        `;
+        liTag.addEventListener("click", () => selectSong(liTag));
+        fragment.appendChild(liTag);
+    }
 
-        const liItem = ulTag.querySelector(`li[li-index="${index + 1}"]`);
-        liItem.addEventListener("click", () => selectSong(liItem));
-    });
-    updatePlayingSong();
+    ulTag.appendChild(fragment);
+    loadedSongs += increment;
 }
 
-function displayArtistSongs(artist) {
-    const filteredSongs = allMusic.filter(song => 
-        song.artist.toLowerCase().includes(artist.toLowerCase())
-    );
-
-    ulTag.innerHTML = "";
-    filteredSongs.forEach((song, index) => {
-        const liTag = `<li li-index="${index + 1}">
-            <div class="row">
-                <span>${song.name}</span>
-                <p>${song.artist}</p>
-            </div>
-            <audio class="${song.src}" src="songs/${song.src}.mp3"></audio>
-        </li>`;
-        ulTag.insertAdjacentHTML("beforeend", liTag);
-
-        const liItem = ulTag.querySelector(`li[li-index="${index + 1}"]`);
-        liItem.addEventListener("click", () => selectSong(liItem));
-    });
-
-    musicList.classList.add("show");
-    updatePlayingSong();
-}
-
+musicList.addEventListener('scroll', () => {
+    if (musicList.scrollTop + musicList.clientHeight >= musicList.scrollHeight) {
+        loadMoreSongs();
+    }
+});
 
 function selectSong(element) {
     musicIndex = element.getAttribute("li-index") - 1;
@@ -443,36 +492,6 @@ function updatePlayingSong() {
         }
         if (currentArtistTag) {
             currentArtistTag.style.fontWeight = "bold";
-        }
-    }
-
-    const moreArtistList = document.querySelector(".more-artist-list ul");
-    if (moreArtistList) {
-        const artistLiTags = moreArtistList.querySelectorAll("li");
-
-        artistLiTags.forEach((li) => {
-            li.classList.remove("playing");
-            const nameTag = li.querySelector("span");
-            const artistTag = li.querySelector("p");
-            if (nameTag) {
-                nameTag.style.fontWeight = "normal";
-            }
-            if (artistTag) {
-                artistTag.style.fontWeight = "normal";
-            }
-        });
-
-        const currentArtistLi = moreArtistList.querySelector(`li[li-index="${musicIndex + 1}"]`);
-        if (currentArtistLi) {
-            currentArtistLi.classList.add("playing");
-            const currentArtistNameTag = currentArtistLi.querySelector("span");
-            const currentArtistArtistTag = currentArtistLi.querySelector("p");
-            if (currentArtistNameTag) {
-                currentArtistNameTag.style.fontWeight = "bold";
-            }
-            if (currentArtistArtistTag) {
-                currentArtistArtistTag.style.fontWeight = "bold";
-            }
         }
     }
 
