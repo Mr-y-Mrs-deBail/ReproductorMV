@@ -152,19 +152,22 @@ function updatePlayingSong() {
 // Controles de la pestaña ________________________________________________________________________________________________________
 
 if ('mediaSession' in navigator) {
-    navigator.mediaSession.metadata = new MediaMetadata({
-        title: musicName.innerHTML,
-        artist: musicArtist.innerText,
-        album: '',
-        artwork: [
-            { src: 'img/${allMusic[musicIndex].img}.jpg', sizes: '96x96', type: 'image/jpeg' },
-            { src: 'img/${allMusic[musicIndex].img}.jpg', sizes: '128x128', type: 'image/jpeg' },
-            { src: 'img/${allMusic[musicIndex].img}.jpg', sizes: '192x192', type: 'image/jpeg' },
-            { src: 'img/${allMusic[musicIndex].img}.jpg', sizes: '256x256', type: 'image/jpeg' },
-            { src: 'img/${allMusic[musicIndex].img}.jpg', sizes: '384x384', type: 'image/jpeg' },
-            { src: 'img/${allMusic[musicIndex].img}.jpg', sizes: '512x512', type: 'image/jpeg' }
-        ]
-    });
+    function updateMetadata() {
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: musicName.innerHTML,
+            artist: musicArtist.innerText,
+            album: '',
+            artwork: [
+                { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '96x96', type: 'image/jpeg' },
+                { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '128x128', type: 'image/jpeg' },
+                { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '192x192', type: 'image/jpeg' },
+                { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '256x256', type: 'image/jpeg' },
+                { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '384x384', type: 'image/jpeg' },
+                { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '512x512', type: 'image/jpeg' }
+            ]
+        });
+        navigator.mediaSession.playbackState = 'playing';
+    }
 
     navigator.mediaSession.setActionHandler('play', () => {
         playMusic();
@@ -183,11 +186,6 @@ if ('mediaSession' in navigator) {
     navigator.mediaSession.setActionHandler('nexttrack', () => {
         nextMusic();
     });
-
-    function updateMetadata() {
-        navigator.mediaSession.metadata.title = musicName.innerHTML;
-        navigator.mediaSession.metadata.artist = musicArtist.innerText;
-    }
 }
 
 // Reproductor de música ____________________________________________________________________________________________________________
@@ -224,6 +222,7 @@ window.addEventListener("load", () => {
     loadMusic(musicIndex);
     updatePlayingSong();
     displayAllSongs();
+    updateMetadata();  // Actualizar metadata al cargar
 });
 
 function loadMusic(index) {
@@ -233,6 +232,7 @@ function loadMusic(index) {
     musicArtist.innerText = song.artist;
     musicImg.src = `img/${song.img}.jpg`;
     mainAudio.src = `music/${song.src}.mp3`;
+    updateMetadata(); // Actualizar metadata al cargar
 }
 
 function playMusic() {
@@ -240,6 +240,7 @@ function playMusic() {
     playPauseBtn.querySelector("i").innerText = "pause";
     mainAudio.play();
     imgArea.classList.add("playing");
+    updateMetadata();  // Asegurar que la metadata está actualizada
 }
 
 function pauseMusic() {
@@ -427,6 +428,7 @@ function displayAllSongs() {
     updatePlayingSong(); // Actualizar la canción en reproducción
 }
 
+// Función para cargar canciones adicionales
 function loadMoreSongs() {
     const totalSongs = allMusic.length;
     const start = loadedSongs;
@@ -452,6 +454,7 @@ function loadMoreSongs() {
     loadedSongs += increment;
 }
 
+// Evento de desplazamiento para Lazy Loading
 musicList.addEventListener('scroll', () => {
     if (musicList.scrollTop + musicList.clientHeight >= musicList.scrollHeight) {
         loadMoreSongs();
