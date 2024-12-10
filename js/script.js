@@ -298,7 +298,7 @@ function shuffleMusic() {
 }
 
 // Lista de canciones
-const gifNames = ["baile", "baile2", "baile3", "baile4", "baile5", "baile6", "baile7"];
+const gifNames = ["baile", "baile2", "baile3", "baile4", "baile5", "baile6", "baile7", "baile8"];
 
 function changeGif() {
     const randomIndex = Math.floor(Math.random() * gifNames.length);
@@ -322,8 +322,6 @@ moreArtistBtn.addEventListener("click", () => {
     displayArtistSongs(currentArtist);
 });
 
-// bold para las canciones
-
 function displayAllSongs() {
     ulTag.innerHTML = "";
     allMusic.forEach((song, index) => {
@@ -343,11 +341,13 @@ function displayAllSongs() {
 }
 
 function displayArtistSongs(artist) {
-    const filteredSongs = allMusic.filter(song => song.artist === artist);
+    const filteredSongs = allMusic.filter(song => 
+        song.artist.toLowerCase().includes(artist.toLowerCase())
+    );
+
     ulTag.innerHTML = "";
     filteredSongs.forEach((song, index) => {
-        const originalIndex = allMusic.findIndex(s => s.name === song.name && s.artist === song.artist);
-        const liTag = `<li li-index="${originalIndex + 1}">
+        const liTag = `<li li-index="${index + 1}">
             <div class="row">
                 <span>${song.name}</span>
                 <p>${song.artist}</p>
@@ -356,13 +356,14 @@ function displayArtistSongs(artist) {
         </li>`;
         ulTag.insertAdjacentHTML("beforeend", liTag);
 
-        const liItem = ulTag.querySelector(`li[li-index="${originalIndex + 1}"]`);
+        const liItem = ulTag.querySelector(`li[li-index="${index + 1}"]`);
         liItem.addEventListener("click", () => selectSong(liItem));
     });
 
     musicList.classList.add("show");
     updatePlayingSong();
 }
+
 
 function selectSong(element) {
     musicIndex = element.getAttribute("li-index") - 1;
