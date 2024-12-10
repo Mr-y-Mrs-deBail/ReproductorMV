@@ -297,6 +297,50 @@ function shuffleMusic() {
     updatePlayingSong();
 }
 
+// Mouse
+
+let isDragging = false;
+
+progressArea.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    updateProgress(e);
+});
+
+progressArea.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+        updateProgress(e);
+    }
+});
+
+progressArea.addEventListener('mouseup', () => {
+    isDragging = false;
+});
+
+progressArea.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    updateProgress(e.touches[0]);
+});
+
+progressArea.addEventListener('touchmove', (e) => {
+    if (isDragging) {
+        updateProgress(e.touches[0]);
+    }
+});
+
+progressArea.addEventListener('touchend', () => {
+    isDragging = false;
+});
+
+function updateProgress(e) {
+    const progressWidth = progressArea.clientWidth;
+    const clickedOffsetX = e.offsetX;
+    const newTime = (clickedOffsetX / progressWidth) * mainAudio.duration;
+    mainAudio.currentTime = newTime;
+
+    const progressPercentage = (mainAudio.currentTime / mainAudio.duration) * 100;
+    progressBar.style.width = `${progressPercentage}%`;
+}
+
 // Lista de canciones
 const gifNames = ["baile", "baile2", "baile3", "baile4", "baile5", "baile6", "baile7", "baile8"];
 
