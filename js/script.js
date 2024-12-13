@@ -151,6 +151,8 @@ function updatePlayingSong() {
 
 // Controles de la pestaña ________________________________________________________________________________________________________
 
+// Controles de la pestaña ________________________________________________________________________________________________________
+
 if ('mediaSession' in navigator) {
     function updateMetadata() {
         navigator.mediaSession.metadata = new MediaMetadata({
@@ -166,26 +168,12 @@ if ('mediaSession' in navigator) {
                 { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '512x512', type: 'image/jpeg' }
             ]
         });
-        navigator.mediaSession.playbackState = 'playing';
     }
 
-    navigator.mediaSession.setActionHandler('play', () => {
-        playMusic();
-        navigator.mediaSession.playbackState = 'playing';
-    });
-
-    navigator.mediaSession.setActionHandler('pause', () => {
-        pauseMusic();
-        navigator.mediaSession.playbackState = 'paused';
-    });
-
-    navigator.mediaSession.setActionHandler('previoustrack', () => {
-        prevMusic();
-    });
-
-    navigator.mediaSession.setActionHandler('nexttrack', () => {
-        nextMusic();
-    });
+    navigator.mediaSession.setActionHandler('play', playMusic);
+    navigator.mediaSession.setActionHandler('pause', pauseMusic);
+    navigator.mediaSession.setActionHandler('previoustrack', prevMusic);
+    navigator.mediaSession.setActionHandler('nexttrack', nextMusic);
 }
 
 // Reproductor de música ____________________________________________________________________________________________________________
@@ -351,6 +339,47 @@ function shuffleMusic() {
     updatePlayingSong();
 }
 
+// Modo aleatorio mejorado
+function shuffleMusicEnhanced() {
+    const previousSongs = [];
+    let randomIndex;
+
+    while (previousSongs.length < allMusic.length) {
+        do {
+            randomIndex = Math.floor(Math.random() * allMusic.length);
+        } while (previousSongs.includes(randomIndex));
+
+        previousSongs.push(randomIndex);
+        musicIndex = randomIndex;
+        loadMusic(musicIndex);
+        playMusic();
+        updatePlayingSong();
+        // Aquí puedes ajustar el tiempo para pasar a la siguiente canción automáticamente
+        // setTimeout(shuffleMusicEnhanced, mainAudio.duration * 1000); 
+    }
+}
+
+repeatBtn.addEventListener("click", () => {
+    switch (repeatBtn.innerText) {
+        case "repeat":
+            repeatBtn.innerText = "repeat_one";
+            repeatBtn.setAttribute("title", "Song looped");
+            isShuffle = false;
+            break;
+        case "repeat_one":
+            repeatBtn.innerText = "shuffle";
+            repeatBtn.setAttribute("title", "Playback shuffled");
+            isShuffle = true;
+            break;
+        case "shuffle":
+            repeatBtn.innerText = "repeat";
+            repeatBtn.setAttribute("title", "Playlist looped");
+            isShuffle = false;
+            break;
+    }
+});
+
+
 // Mouse ___________________________________________________________________________
 
 let isDragging = false;
@@ -402,6 +431,8 @@ progressArea.addEventListener('touchend', () => {
 
 // Lista de canciones
 
+// Lista de canciones
+
 const gifNames = ["baile", "baile2", "baile3", "baile4", "baile5", "baile6", "baile7", "baile8"];
 
 function changeGif() {
@@ -413,7 +444,8 @@ function changeGif() {
 
 moreMusicBtn.addEventListener("click", () => {
     changeGif();
-    displayAllSongs();
+    // Comentado para activarlo más tarde
+    // displayAllSongs();
     musicList.classList.toggle("show");
 });
 
@@ -421,14 +453,27 @@ closeMoreMusic.addEventListener("click", () => {
     musicList.classList.remove("show");
 });
 
+// Cargar todas las canciones al iniciar, sin lazy loading para mostrarlas siempre
 function displayAllSongs() {
     ulTag.innerHTML = "";
-    loadedSongs = 20; // Resetear el contador
-    loadMoreSongs(); // Cargar las primeras canciones
-    updatePlayingSong(); // Actualizar la canción en reproducción
+    allMusic.forEach((song, index) => {
+        const liTag = `<li li-index="${index + 1}">
+            <div class="row">
+                <span>${song.name}</span>
+                <p>${song.artist}</p>
+            </div>
+            <audio class="${song.src}" src="songs/${song.src}.mp3"></audio>
+        </li>`;
+        ulTag.insertAdjacentHTML("beforeend", liTag);
+
+        const liItem = ulTag.querySelector(`li[li-index="${index + 1}"]`);
+        liItem.addEventListener("click", () => selectSong(liItem));
+    });
+    updatePlayingSong();
 }
 
-// Función para cargar canciones adicionales
+// Función para cargar canciones adicionales (Comentada para evitar la actualización constante)
+/*
 function loadMoreSongs() {
     const totalSongs = allMusic.length;
     const start = loadedSongs;
@@ -454,12 +499,13 @@ function loadMoreSongs() {
     loadedSongs += increment;
 }
 
-// Evento de desplazamiento para Lazy Loading
+// Evento de desplazamiento para Lazy Loading (Comentado para evitar la actualización constante)
 musicList.addEventListener('scroll', () => {
     if (musicList.scrollTop + musicList.clientHeight >= musicList.scrollHeight) {
         loadMoreSongs();
     }
 });
+*/
 
 function selectSong(element) {
     musicIndex = element.getAttribute("li-index") - 1;
