@@ -1,4 +1,3 @@
-//Dropdown
 document.getElementById("more-options").addEventListener("click", function() {
     var dropdownContent = document.querySelector(".dropdown-content");
     var icon = document.getElementById("more-options");
@@ -50,8 +49,13 @@ function debounce(func, delay) {
     };
 }
 
+// Función para remover acentos
+function removeAccents(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 document.getElementById("search-input-principal").addEventListener("input", debounce(function() {
-    const searchQuery = this.value.toLowerCase();
+    const searchQuery = removeAccents(this.value.toLowerCase());
     const suggestionsContainer = document.getElementById("suggestions-container-principal");
 
     if (searchQuery.length === 0) {
@@ -61,8 +65,8 @@ document.getElementById("search-input-principal").addEventListener("input", debo
 
     suggestionsContainer.innerHTML = '';
     const filteredSongs = allMusic.filter(song =>
-        song.name.toLowerCase().includes(searchQuery) ||
-        song.artist.toLowerCase().includes(searchQuery)
+        removeAccents(song.name.toLowerCase()).includes(searchQuery) ||
+        removeAccents(song.artist.toLowerCase()).includes(searchQuery)
     );
 
     if (filteredSongs.length > 0) {
@@ -87,7 +91,7 @@ document.getElementById("search-input-principal").addEventListener("input", debo
 }, 300)); // Delay de 300ms
 
 function selectSongByName(songName, songArtist) {
-    const songIndex = allMusic.findIndex(song => song.name.toLowerCase() === songName.toLowerCase() && song.artist.toLowerCase() === songArtist.toLowerCase());
+    const songIndex = allMusic.findIndex(song => removeAccents(song.name.toLowerCase()) === removeAccents(songName.toLowerCase()) && removeAccents(song.artist.toLowerCase()) === removeAccents(songArtist.toLowerCase()));
     if (songIndex !== -1) {
         musicIndex = songIndex;
         loadMusic(musicIndex);
@@ -100,7 +104,7 @@ function selectSongByName(songName, songArtist) {
 }
 
 function isCurrentSong(songName, songArtist) {
-    return musicName.innerHTML.toLowerCase().includes(songName.toLowerCase()) && musicArtist.innerText.toLowerCase().includes(songArtist.toLowerCase());
+    return removeAccents(musicName.innerHTML.toLowerCase()).includes(removeAccents(songName.toLowerCase())) && removeAccents(musicArtist.innerText.toLowerCase()).includes(removeAccents(songArtist.toLowerCase()));
 }
 
 function updatePlayingSong() {
@@ -149,7 +153,7 @@ function updatePlayingSong() {
     });
 }
 
-// Controles de la pestaña ________________________________________________________________________________________________________
+
 
 // Controles de la pestaña ________________________________________________________________________________________________________
 
@@ -473,7 +477,7 @@ function displayAllSongs() {
 }
 
 // Función para cargar canciones adicionales (Comentada para evitar la actualización constante)
-/*
+
 function loadMoreSongs() {
     const totalSongs = allMusic.length;
     const start = loadedSongs;
@@ -505,7 +509,6 @@ musicList.addEventListener('scroll', () => {
         loadMoreSongs();
     }
 });
-*/
 
 function selectSong(element) {
     musicIndex = element.getAttribute("li-index") - 1;
