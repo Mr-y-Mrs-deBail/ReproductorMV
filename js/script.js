@@ -219,8 +219,8 @@ if ('mediaSession' in navigator) {
     navigator.mediaSession.setActionHandler('nexttrack', nextMusic);
 }
 
-// Pausar animaciones cuando el reproductor está en segundo plano
-document.addEventListener('visibilitychange', function() {
+// Quitar la función que pausa la música en segundo plano
+document.removeEventListener('visibilitychange', function() {
     if (document.hidden) {
         mainAudio.pause();
         imgArea.classList.remove("playing");
@@ -255,10 +255,6 @@ const wrapper = document.querySelector(".wrapper"),
 let musicIndex = Math.floor(Math.random() * allMusic.length);
 let isMusicPaused = true;
 let isShuffle = false;
-
-// Variables para Lazy Loading
-let loadedSongs = 20; // Número inicial de canciones para cargar
-const increment = 20; // Número de canciones para cargar cada vez
 
 // Ordena alfabéticamente los nombres de las canciones
 allMusic.sort((a, b) => a.name.localeCompare(b.name));
@@ -407,24 +403,59 @@ function shuffleMusic() {
     updatePlayingSong();
 }
 
-// Modo aleatorio mejorado
-function shuffleMusicEnhanced() {
-    const previousSongs = [];
+// Modo aleatorio  ______________________________________________________
+
+let playedSongs = [];
+let allSongsPlayed = false;
+
+function shuffleMusic() {
+    if (playedSongs.length >= allMusic.length) {
+        playedSongs = [];
+        allSongsPlayed = true;
+    }
     let randomIndex;
+    do {
+        randomIndex = Math.floor(Math.random() * allMusic.length);
+    } while (playedSongs.includes(randomIndex) && !allSongsPlayed);
+    playedSongs.push(randomIndex);
+    musicIndex = randomIndex;
+    loadMusic(musicIndex);
+    playMusic();
+    updatePlayingSong();
+}
 
-    while (previousSongs.length < allMusic.length) {
-        do {
-            randomIndex = Math.floor(Math.random() * allMusic.length);
-        } while (previousSongs.includes(randomIndex));
+function nextMusic() {
+    if (isShuffle) {
+        shuffleMusic();
+    } else {
+        musicIndex = (musicIndex + 1) % allMusic.length;
+        loadMusic(musicIndex);
+        playMusic();
+        updatePlayingSong();
+    }
 
-        previousSongs.push(randomIndex);
-        musicIndex = randomIndex;
+    // Cargar más canciones si llegamos al final del buffer actual
+    if (musicIndex % increment === 0 && musicIndex > 0 && loadedSongs < allMusic.length) {
+        loadMoreSongs();
+    }
+}
+
+function prevMusic() {
+    if (playedSongs.length > 1) {
+        playedSongs.pop(); // Remover la canción actual
+        musicIndex = playedSongs[playedSongs.length - 1]; // Volver a la canción anterior
+        loadMusic(musicIndex);
+        playMusic();
+        updatePlayingSong();
+    } else {
+        musicIndex = (musicIndex - 1 + allMusic.length) % allMusic.length;
         loadMusic(musicIndex);
         playMusic();
         updatePlayingSong();
     }
 }
 
+// Repetición de canción
 repeatBtn.addEventListener("click", () => {
     switch (repeatBtn.innerText) {
         case "repeat":
@@ -444,6 +475,7 @@ repeatBtn.addEventListener("click", () => {
             break;
     }
 });
+
 
 // Mouse ______________________________________________________
 
@@ -507,7 +539,7 @@ function changeGif() {
 
 moreMusicBtn.addEventListener("click", () => {
     changeGif();
-    displayAllSongs(); // Asegúrate de llamar a displayAllSongs para cargar las canciones
+    displayInitialSongs(); // Mostrar solo las primeras 20 canciones
     musicList.classList.toggle("show");
 });
 
@@ -515,11 +547,14 @@ closeMoreMusic.addEventListener("click", () => {
     musicList.classList.remove("show");
 });
 
-// Cargar todas las canciones al iniciar, sin lazy loading para mostrarlas siempre
-function displayAllSongs() {
+let loadedSongs = 20; // Número inicial de canciones para cargar
+const increment = 20; // Número de canciones para cargar cada vez
+
+function displayInitialSongs() {
     ulTag.innerHTML = "";
-    allMusic.forEach((song, index) => {
-        const liTag = `<li li-index="${index + 1}">
+    for (let i = 0; i < loadedSongs; i++) {
+        const song = allMusic[i];
+        const liTag = `<li li-index="${i + 1}">
             <div class="row">
                 <span>${song.name}</span>
                 <p>${song.artist}</p>
@@ -527,14 +562,13 @@ function displayAllSongs() {
             <audio class="${song.src}" src="songs/${song.src}.mp3"></audio>
         </li>`;
         ulTag.insertAdjacentHTML("beforeend", liTag);
-
-        const liItem = ulTag.querySelector(`li[li-index="${index + 1}"]`);
+        const liItem = ulTag.querySelector(`li[li-index="${i + 1}"]`);
         liItem.addEventListener("click", () => selectSong(liItem));
-    });
+    }
     updatePlayingSong();
 }
 
-// Función para cargar canciones adicionales (Comentada para evitar la actualización constante)
+// Función para cargar más canciones
 function loadMoreSongs() {
     const totalSongs = allMusic.length;
     const start = loadedSongs;
@@ -560,7 +594,7 @@ function loadMoreSongs() {
     loadedSongs += increment;
 }
 
-// Evento de desplazamiento para Lazy Loading (Comentado para evitar la actualización constante)
+// Evento para cargar más canciones cuando la lista llegue al final
 musicList.addEventListener('scroll', () => {
     if (musicList.scrollTop + musicList.clientHeight >= musicList.scrollHeight) {
         loadMoreSongs();
@@ -573,6 +607,7 @@ function selectSong(element) {
     playMusic();
     updatePlayingSong();
 }
+
 
 // función bold ______________________________________________________
 
