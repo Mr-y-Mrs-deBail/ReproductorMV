@@ -152,6 +152,7 @@ body {
     border-radius: 10px;
     overflow-y: auto;
     overflow-x: hidden;
+    max-height: 400px;
     -webkit-overflow-scrolling: touch;
     z-index: 1;
 }

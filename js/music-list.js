@@ -1241,7 +1241,7 @@ let allMusic = [
                                                         
     { 
         name: "LHNA", 
-        artist: "Anuel AA", 
+        artist: "Anuel AA ft Rob GZ", 
         img: "music-39", 
         src: "music-178", 
     },
@@ -1634,7 +1634,7 @@ let allMusic = [
                                                                                                                 
     { 
         name: "Armao 100pre andamos (Remix)", 
-        artist: "Anuel AA x Bryant Myers x The Secret Panda x Ñengo Flow x Alexio x Darell x Juanka", 
+        artist: "Anuel AA x Bryant Myers x The Secret Panda x Ñengo Flow x Alexio x Darell x Juanka & Más", 
         img: "music-75", 
         src: "music-234", 
     },
@@ -2897,6 +2897,90 @@ let allMusic = [
         artist: "Anuel AA ft Robgz", 
         img: "music-189", 
         src: "music-414", 
+    },
+                                                                                                                                                                                       
+    { 
+        name: "Ella quiere beber", 
+        artist: "Anuel AA", 
+        img: "music-38", 
+        src: "music-415", 
+    },
+                                                                                                                                                                                       
+    { 
+        name: "Coronamos", 
+        artist: "Anuel AA ft El Nene la Amenaza", 
+        img: "music-51", 
+        src: "music-416", 
+    },
+                                                                                                                                                                                       
+    { 
+        name: "Soldado y Profeta (Remix)", 
+        artist: "Anuel AA & Varios Artistas", 
+        img: "music-51", 
+        src: "music-417", 
+    },
+                                                                                                                                                                                       
+    { 
+        name: "Coronamos", 
+        artist: "Anuel AA ft Lito Kirino", 
+        img: "music-190", 
+        src: "music-418", 
+    },
+                                                                                                                                                                                       
+    { 
+        name: "Mi vida", 
+        artist: "Anuel AA", 
+        img: "music-51", 
+        src: "music-419", 
+    },
+                                                                                                                                                                                       
+    { 
+        name: "In my feelings (Spanish Version)", 
+        artist: "Anuel AA", 
+        img: "music-51", 
+        src: "music-420", 
+    },
+                                                                                                                                                                                       
+    { 
+        name: "Dinero lloviendo", 
+        artist: "Anuel AA", 
+        img: "music-51", 
+        src: "music-421", 
+    },
+                                                                                                                                                                                       
+    { 
+        name: "La noche oscura", 
+        artist: "Anuel AA x Sencillo Rap x Jory Boy", 
+        img: "music-191", 
+        src: "music-422", 
+    },
+                                                                                                                                                                                       
+    { 
+        name: "27", 
+        artist: "Anuel AA x D. Ozi x Sou El Flotador", 
+        img: "music-192", 
+        src: "music-423", 
+    },
+                                                                                                                                                                                       
+    { 
+        name: "Armao 100pre andamos (Remix 2)", 
+        artist: "Anuel AA x Noriel Almighty x Pusho", 
+        img: "music-51", 
+        src: "music-424", 
+    },
+                                                                                                                                                                                       
+    { 
+        name: "No te hagas (Remix)", 
+        artist: "Anuel AA x Lary Over x Jory Boy x Bad Bunny", 
+        img: "music-193", 
+        src: "music-425", 
+    },
+                                                                                                                                                                                       
+    { 
+        name: "Ayer", 
+        artist: "Anuel AA ft Farruko", 
+        img: "music-194", 
+        src: "music-426", 
     },
     
 ];
