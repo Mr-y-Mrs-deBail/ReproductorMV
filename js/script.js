@@ -194,8 +194,6 @@ function updatePlayingSong() {
 }
 
 
-// Controles de la pestaña ______________________________________________________
-
 if ('mediaSession' in navigator) {
     function updateMetadata() {
         navigator.mediaSession.metadata = new MediaMetadata({
@@ -217,14 +215,17 @@ if ('mediaSession' in navigator) {
     navigator.mediaSession.setActionHandler('pause', pauseMusic);
     navigator.mediaSession.setActionHandler('previoustrack', prevMusic);
     navigator.mediaSession.setActionHandler('nexttrack', nextMusic);
+    navigator.mediaSession.setActionHandler('seekbackward', function() {
+        mainAudio.currentTime = Math.max(mainAudio.currentTime - 10, 0);
+    });
+    navigator.mediaSession.setActionHandler('seekforward', function() {
+        mainAudio.currentTime = Math.min(mainAudio.currentTime + 10, mainAudio.duration);
+    });
 }
 
-// Quitar la función que pausa la música en segundo plano
-document.removeEventListener('visibilitychange', function() {
-    if (document.hidden) {
-        mainAudio.pause();
-        imgArea.classList.remove("playing");
-    } else {
+// Mantener la música en reproducción cuando la página no está visible
+document.addEventListener('visibilitychange', function() {
+    if (!document.hidden) {
         if (wrapper.classList.contains("paused")) {
             mainAudio.play();
             imgArea.classList.add("playing");
