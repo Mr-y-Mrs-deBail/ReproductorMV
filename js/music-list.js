@@ -2982,5 +2982,257 @@ let allMusic = [
         img: "music-194", 
         src: "music-426", 
     },
+                                                                                                                                                                                           
+    { 
+        name: "Si ella sale", 
+        artist: "Bad Bunny", 
+        img: "music-195", 
+        src: "music-427", 
+    },
+                                                                                                                                                                                               
+    { 
+        name: "Más de una cita", 
+        artist: "Bad Bunny ft Zion & Lennox", 
+        img: "music-195", 
+        src: "music-428", 
+    },
+                                                                                                                                                                                               
+    { 
+        name: "Bye me fui", 
+        artist: "Bad Bunny", 
+        img: "music-195", 
+        src: "music-429", 
+    },
+                                                                                                                                                                                               
+    { 
+        name: "Canción con Yandel", 
+        artist: "Bad Bunny ft Yandel", 
+        img: "music-195", 
+        src: "music-430", 
+    },
+                                                                                                                                                                                               
+    { 
+        name: "Pa' romperla", 
+        artist: "Bad Bunny ft Don Omar", 
+        img: "music-195", 
+        src: "music-431", 
+    },
+                                                                                                                                                                                               
+    { 
+        name: "Bad con Nicky", 
+        artist: "Bad Bunny ft Nicky Jam", 
+        img: "music-195", 
+        src: "music-432", 
+    },
+                                                                                                                                                                                               
+    { 
+        name: "Bendiciones", 
+        artist: "Bad Bunny", 
+        img: "music-195", 
+        src: "music-433", 
+    },
+                                                                                                                                                                                               
+    { 
+        name: "Cómo se siente (Remix)", 
+        artist: "Bad Bunny ft Jhay Cortez", 
+        img: "music-195", 
+        src: "music-434", 
+    },
+                                                                                                                                                                                               
+    { 
+        name: "Ronca Freestyle", 
+        artist: "Bad Bunny", 
+        img: "music-195", 
+        src: "music-435", 
+    },
+                                                                                                                                                                                               
+    { 
+        name: "En casita", 
+        artist: "Bad Bunny ft Gabriela", 
+        img: "music-195", 
+        src: "music-436", 
+    },
+                                                                                                                                                                                                   
+    { 
+        name: "Nadie sabe", 
+        artist: "Bad Bunny", 
+        img: "music-196", 
+        src: "music-437", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Monaco", 
+        artist: "Bad Bunny", 
+        img: "music-196", 
+        src: "music-438", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Fina", 
+        artist: "Bad Bunny ft Young Miko & Tego Calderón", 
+        img: "music-196", 
+        src: "music-439", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Hibiki", 
+        artist: "Bad Bunny ft Mora", 
+        img: "music-196", 
+        src: "music-440", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Mr October", 
+        artist: "Bad Bunny", 
+        img: "music-196", 
+        src: "music-441", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Cybertruck", 
+        artist: "Bad Bunny", 
+        img: "music-196", 
+        src: "music-442", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Vou 787", 
+        artist: "Bad Bunny", 
+        img: "music-196", 
+        src: "music-443", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Seda", 
+        artist: "Bad Bunny ft Bryant Myers", 
+        img: "music-196", 
+        src: "music-444", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Gracias por nada", 
+        artist: "Bad Bunny", 
+        img: "music-196", 
+        src: "music-445", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Teléfono nuevo", 
+        artist: "Bad Bunny ft Luar la L", 
+        img: "music-196", 
+        src: "music-446", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Baby Nueva", 
+        artist: "Bad Bunny", 
+        img: "music-196", 
+        src: "music-447", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Mercedes Carota", 
+        artist: "Bad Bunny ft Yovngchimi", 
+        img: "music-196", 
+        src: "music-448", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Los Pits", 
+        artist: "Bad Bunny", 
+        img: "music-196", 
+        src: "music-449", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Vuelve Candy B", 
+        artist: "Bad Bunny", 
+        img: "music-196", 
+        src: "music-450", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Baticano", 
+        artist: "Bad Bunny", 
+        img: "music-196", 
+        src: "music-451", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "No me quiero casar", 
+        artist: "Bad Bunny", 
+        img: "music-196", 
+        src: "music-452", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Thunder y Lightning", 
+        artist: "Bad Bunny", 
+        img: "music-196", 
+        src: "music-453", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Perro Negro", 
+        artist: "Bad Bunny ft Feid", 
+        img: "music-196", 
+        src: "music-454", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Europa :(", 
+        artist: "Bad Bunny", 
+        img: "music-196", 
+        src: "music-455", 
+    },
+                                                                                                                                                                                                       
+    { 
+        name: "Acho PR", 
+        artist: "Bad Bunny x Arcángel x Ñengo Flow x De la Ghetto", 
+        img: "music-196", 
+        src: "music-456", 
+    },
+                                                                                                                                                                                                          
+    { 
+        name: "De las 2", 
+        artist: "Noriel x Bad Bunny x Arcángel", 
+        img: "music-197", 
+        src: "music-457", 
+    },
+                                                                                                                                                                                                          
+    { 
+        name: "Tócate tu misma", 
+        artist: "Alexis & Fido ft Bad Bunny", 
+        img: "music-197", 
+        src: "music-458", 
+    },
+                                                                                                                                                                                                          
+    { 
+        name: "La Jumpa", 
+        artist: "Arcángel ft Bad Bunny", 
+        img: "music-197", 
+        src: "music-459", 
+    },
+                                                                                                                                                                                                          
+    { 
+        name: "Me Acostrumbre", 
+        artist: "Arcángel ft Bad Bunny", 
+        img: "music-197", 
+        src: "music-460", 
+    },
+                                                                                                                                                                                                          
+    { 
+        name: "Volví", 
+        artist: "Aventura ft Bad Bunny", 
+        img: "music-197", 
+        src: "music-461", 
+    },
+                                                                                                                                                                                                          
+    { 
+        name: "Blockia", 
+        artist: "Bad Bunny x Farruko x DJ Luian x Mambo Kingz", 
+        img: "music-198", 
+        src: "music-462", 
+    },
     
 ];
