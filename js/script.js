@@ -193,7 +193,8 @@ function updatePlayingSong() {
     }
 }
 
-// Controles de pestaña
+// Controles para la pestaña
+
 if ('mediaSession' in navigator) {
     function updateMetadata() {
         navigator.mediaSession.metadata = new MediaMetadata({
@@ -210,8 +211,6 @@ if ('mediaSession' in navigator) {
             ]
         });
     }
-
-    updateMetadata();
 
     navigator.mediaSession.setActionHandler('play', playMusic);
     navigator.mediaSession.setActionHandler('pause', pauseMusic);
@@ -231,11 +230,9 @@ document.addEventListener('visibilitychange', function() {
         if (wrapper.classList.contains("paused")) {
             mainAudio.play();
             imgArea.classList.add("playing");
-            updateMetadata(); // Asegurarse de que la metadata se actualiza cuando se vuelve visible
         }
     }
 });
-
 
 // Reproductor de música ______________________________________________________
 
