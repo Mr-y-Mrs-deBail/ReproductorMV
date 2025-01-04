@@ -1,4 +1,4 @@
-// Evento de click en "more-options" ______________________________________________________
+// Buscador ______________________________________________________
 
 document.getElementById("more-options").addEventListener("click", function() {
     var dropdownContent = document.querySelector(".dropdown-content");
@@ -74,6 +74,7 @@ function throttle(func, limit) {
 }
 
 // Apply debounce and throttle to events
+
 window.addEventListener('resize', debounce(function() {
     console.log('Resized');
 }, 200));
@@ -273,9 +274,10 @@ function loadMusic(index) {
         mainAudio.removeAttribute('src'); // Libera el recurso de audio anterior
         mainAudio.load();
     }
-    if (musicImg.src) {
-        musicImg.removeAttribute('src'); // Libera la imagen anterior
-    }
+    
+    //if (musicImg.src) {
+       // musicImg.removeAttribute('src'); // Libera la imagen anterior
+   // }
 
     const song = allMusic[index];
     const formattedName = song.name.replace(/ - /g, ' <br> ');
@@ -529,7 +531,9 @@ progressArea.addEventListener('touchend', () => {
 
 // Lista de canciones ______________________________________________________
 
-const gifNames = ["baile", "baile2", "baile3", "baile4", "baile5", "baile6", "baile7", "baile8"];
+const gifNames = ["baile", "baile2", "baile3", "baile4", "baile5", "baile6", "baile7", "baile8", "baile9"];
+const alphabet = ["#", ... "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")];
+const backToAlphabetBtn = document.getElementById('back-to-alphabet');
 
 function changeGif() {
     const randomIndex = Math.floor(Math.random() * gifNames.length);
@@ -540,81 +544,90 @@ function changeGif() {
 
 moreMusicBtn.addEventListener("click", () => {
     changeGif();
-    displayInitialSongs(); // Mostrar solo las primeras 20 canciones
-    musicList.classList.toggle("show");
+    document.querySelector(".alphabet-list").style.display = "block";
+    musicList.classList.add("show");
+});
+
+backToAlphabetBtn.addEventListener("click", () => {
+    showAlphabetList();
 });
 
 closeMoreMusic.addEventListener("click", () => {
+    closeMusicList();
+});
+
+function closeMusicList() {
     musicList.classList.remove("show");
-});
+}
 
-let loadedSongs = 20; // Número inicial de canciones para cargar
-const increment = 20; // Número de canciones para cargar cada vez
-
-function displayInitialSongs() {
+function loadSongsByLetter(letter) {
     ulTag.innerHTML = "";
-    for (let i = 0; i < loadedSongs; i++) {
-        const song = allMusic[i];
-        const liTag = `<li li-index="${i + 1}">
-            <div class="row">
-                <span>${song.name}</span>
-                <p>${song.artist}</p>
-            </div>
-            <audio class="${song.src}" src="songs/${song.src}.mp3"></audio>
-        </li>`;
-        ulTag.insertAdjacentHTML("beforeend", liTag);
-        const liItem = ulTag.querySelector(`li[li-index="${i + 1}"]`);
-        liItem.addEventListener("click", () => selectSong(liItem));
+
+    let filteredSongs;
+    if (letter === "#") {
+        filteredSongs = allMusic.filter(song => /^[^a-zA-Z]/.test(song.name));
+    } else {
+        filteredSongs = allMusic.filter(song => song.name.startsWith(letter));
     }
-    updatePlayingSong();
+
+    if (filteredSongs.length > 0) {
+        filteredSongs.forEach((song, index) => {
+            const liTag = document.createElement('li');
+            liTag.setAttribute('li-index', index + 1);
+            liTag.innerHTML = `
+                <div class="row">
+                    <span>${song.name}</span>
+                    <p>${song.artist}</p>
+                </div>
+                <audio class="${song.src}" src="songs/${song.src}.mp3"></audio>
+            `;
+            liTag.addEventListener("click", () => selectSong(liTag));
+            ulTag.appendChild(liTag);
+        });
+    } else {
+        ulTag.innerHTML = "<li>Ups hubo un error amor</li>";
+    }
+
+    updatePlayingSong(); 
 }
 
-// Función para cargar más canciones
-function loadMoreSongs() {
-    const totalSongs = allMusic.length;
-    const start = loadedSongs;
-    const end = Math.min(loadedSongs + increment, totalSongs);
-    const fragment = document.createDocumentFragment();
+// Abecedario y conteo de canciones ______________________________________________________
 
-    for (let i = start; i < end; i++) {
-        const song = allMusic[i];
-        const liTag = document.createElement('li');
-        liTag.setAttribute('li-index', i + 1);
-        liTag.innerHTML = `
-            <div class="row">
-                <span>${song.name}</span>
-                <p>${song.artist}</p>
-            </div>
-            <audio class="${song.src}" src="songs/${song.src}.mp3"></audio>
-        `;
-        liTag.addEventListener("click", () => selectSong(liTag));
-        fragment.appendChild(liTag);
-    }
+function loadAlphabet() {
+    const alphabetList = document.getElementById('alphabet');
+    alphabetList.innerHTML = ''; // Limpiar la lista del abecedario
 
-    ulTag.appendChild(fragment);
-    loadedSongs += increment;
+    alphabet.forEach(letter => {
+        let songCount;
+        if (letter === "#") {
+            songCount = allMusic.filter(song => /^[^a-zA-Z]/.test(song.name)).length;
+        } else {
+            songCount = allMusic.filter(song => song.name.startsWith(letter)).length;
+        }
+        const liTag = `<li><a href="#" onclick="loadSongsByLetter('${letter}')">${letter} (<span id="count-${letter}">${songCount}</span>)</a></li>`;
+        alphabetList.insertAdjacentHTML("beforeend", liTag);
+    });
 }
 
-// Evento para cargar más canciones cuando la lista llegue al final
-musicList.addEventListener('scroll', () => {
-    if (musicList.scrollTop + musicList.clientHeight >= musicList.scrollHeight) {
-        loadMoreSongs();
-    }
-});
+// Función para seleccionar una canción ______________________________________________________
 
 function selectSong(element) {
-    musicIndex = element.getAttribute("li-index") - 1;
-    loadMusic(musicIndex);
-    playMusic();
-    updatePlayingSong();
+    const songIndex = allMusic.findIndex(song => song.name === element.querySelector('span').innerText);
+    if (songIndex !== -1) {
+        musicIndex = songIndex;
+        loadMusic(musicIndex);
+        playMusic();
+        updatePlayingSong();
+    }
 }
 
-
-// función bold ______________________________________________________
+// Función bold ______________________________________________________
 
 function updatePlayingSong() {
     const allLiTags = ulTag.querySelectorAll("li");
+    const alphabetLinks = document.querySelectorAll("#alphabet li a");
 
+    // Limpiar la clase 'playing' y los estilos de negrita
     allLiTags.forEach((li) => {
         li.classList.remove("playing");
         const nameTag = li.querySelector("span");
@@ -627,6 +640,16 @@ function updatePlayingSong() {
         }
     });
 
+    alphabetLinks.forEach(link => {
+        link.style.fontWeight = "normal";
+        const letter = link.innerText.charAt(0);
+        const count = document.getElementById(`count-${letter}`);
+        if (count) {
+            count.style.fontWeight = "normal";
+        }
+    });
+
+    // Resaltar la canción actualmente en reproducción
     const currentLi = ulTag.querySelector(`li[li-index="${musicIndex + 1}"]`);
     if (currentLi) {
         currentLi.classList.add("playing");
@@ -640,13 +663,12 @@ function updatePlayingSong() {
         }
     }
 
-    // Actualizar sugerencias en el buscador
     const suggestionsContainer = document.getElementById("suggestions-container");
     if (suggestionsContainer) {
         const suggestionItems = suggestionsContainer.querySelectorAll(".suggestion-item");
         suggestionItems.forEach((item) => {
             item.classList.remove("playing");
-            item.innerHTML = item.innerText; // Restablecer el estilo por defecto
+            item.innerHTML = item.innerText;
         });
 
         const currentSuggestionItem = suggestionsContainer.querySelector(`.suggestion-item[li-index="${musicIndex + 1}"]`);
@@ -658,3 +680,8 @@ function updatePlayingSong() {
         }
     }
 }
+
+// Evento de carga para inicializar el abecedario
+window.addEventListener('load', loadAlphabet);
+
+// ...

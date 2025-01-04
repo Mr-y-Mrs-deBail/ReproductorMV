@@ -179,7 +179,12 @@ body {
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
-} 
+}
+
+#expand-more {
+    opacity: 0;
+    cursor: none;
+}
 
 .top-bar i { 
     font-size: 30px; 
@@ -397,6 +402,17 @@ body {
     font-weight: 700; 
 }
 
+#back-to-alphabet { 
+    opacity: 1;
+} 
+
+#back-to-alphabet {
+    font-size: 20px;
+    color: var(--white);
+    font-weight: bold;
+    margin-left: -20px;
+}
+
 .music-list ul { 
     margin: 10px 0;
     margin-top: 20px; 
@@ -470,6 +486,30 @@ ul li.playing {
     margin-top: -10px;
 }
 
+/* Lista del abecedario */
+
+.alphabet-list {
+    width: 100%; 
+    padding: 15px 3px; 
+    border-radius: 15px; 
+    margin-bottom: 20px;
+}
+
+.alphabet-list ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+}
+
+.alphabet-list ul li {
+    margin: 5px 0;
+}
+
+.alphabet-list ul li a {
+    text-decoration: none;
+    color: var(--dark);
+}
 
 /* Fondo */
 

@@ -64,8 +64,6 @@
                     <div class="dropdown">
                         <i class="material-icons" id="more-options">more_horiz</i>
                         <div class="dropdown-content">
-                            <!-- <a href="#" id="add-to-playlist"> <span class="material-icons">add</span></a> -->
-                            <!-- <a href="#" id="more-artist">Más de este artista <span class="material-icons">add</span></a> -->
                             <a href="#" id="search-option">Buscar <span class="material-icons">search</span></a>
                         </div>
                     </div>
@@ -103,38 +101,20 @@
                         <div class="row">
                             <span><img class="dance" src="img/baile.gif" alt="gif"> Todas las canciones</span>
                         </div>
-                        <i id="close" class="material-icons">close</i>
-                    </div>
-                    <ul> <!-- Código js --> </ul>
-                </div>
-            </div>
-
-          <!-- Ventana del Reproductor 2 -->
-            <!-- <div id="expanded-view" class="wrapper" style="display: none;">
-                <i id="keyboard-up" class="material-icons">keyboard_arrow_up</i>
-                <div class="container mt-2 d-flex flex-column min-vh-100 mb-5">
-                    <div class="d-flex align-items-center justify-content-center">
-                        <div class="search-container-secundario">
-                            <input type="text" id="search-input-secundario" placeholder="Buscar...">
-                            <div id="suggestions-container-secundario" class="suggestions-container-secundario"></div>
+                        <div>
+                            <i id="back-to-alphabet" class="material-icons">arrow_back_ios_new</i>
+                            <i id="close" class="material-icons">close</i>
                         </div>
                     </div>
-                    
-                    <div class="horizontal-list mt-3">
-                        <span class="tab selected" onclick="selectTab(this, 'songs-list')">Canciones</span>
-                        <span class="tab" onclick="selectTab(this, 'artists-list')">Artistas</span>
-                        <span class="tab" onclick="selectTab(this, 'folders-list')">Carpetas</span>
+                    <div class="alphabet-list">
+                          <ul id="alphabet">
+                        </ul>
                     </div>
-                    
-                    <div id="songs-list" class="songs-list"></div> 
-                    <div id="artists-list" class="artists-list" style="display: none;"></div> 
-                    <div id="folders-list" class="folders-list" style="display: none;"></div>
-                </div>
-            </div> -->
+                    <ul id="playlist"></ul>
+                </div>              
+            </div>
         </div>
     </div>
-
-    <!-- Código js -->
     
     <script src="js/music-list.js"></script>
     <script src="js/script.js"></script>
@@ -142,24 +122,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-
-    <script>
-        document.getElementById("expand-more").addEventListener("click", () => {
-            Swal.fire({
-                imageUrl: 'img/img-1.jpg',  
-                imageAlt: 'img',
-                imageWidth: '270px',
-                background: "",
-                confirmButtonText: '¡Muy bien!',
-                confirmButtonColor: 'black',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                allowEnterKey: false,  
-            });
-        });
-    </script> 
-
+    
 </body>
 </html>

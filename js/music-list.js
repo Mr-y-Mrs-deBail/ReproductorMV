@@ -93,7 +93,7 @@ let allMusic = [
     { 
         name: "Mía", 
         artist: "Bad Bunny ft Drake", 
-        img: "music-3", 
+        img: "music-220", 
         src: "music-14", 
     },
     
@@ -464,7 +464,7 @@ let allMusic = [
     { 
         name: "Después de la playa", 
         artist: "Bad Bunny", 
-        img: "music-10", 
+        img: "music-221", 
         src: "music-67", 
     }, 
                                                     
@@ -2970,9 +2970,9 @@ let allMusic = [
     },
                                                                                                                                                                                        
     { 
-        name: "No te hagas (Remix)", 
-        artist: "Anuel AA x Lary Over x Jory Boy x Bad Bunny", 
-        img: "music-193", 
+        name: "Te guste", 
+        artist: "Bad Bunny ft Jennifer Lopez", 
+        img: "music-197", 
         src: "music-425", 
     },
                                                                                                                                                                                        
@@ -3234,5 +3234,313 @@ let allMusic = [
         img: "music-198", 
         src: "music-462", 
     },
+                                                                                                                                                                                                              
+    { 
+        name: "PaSiempre", 
+        artist: "Tainy x Bad Bunny x Arcángel x Myke Towers x Jhayco x Omar Courtz x Arca", 
+        img: "music-199", 
+        src: "music-463", 
+    },
+                                                                                                                                                                                                              
+    { 
+        name: "Soltera (Remix)", 
+        artist: "Lunay x Bad Bunny x Daddy Yankee", 
+        img: "music-200", 
+        src: "music-464", 
+    },
+                                                                                                                                                                                                              
+    { 
+        name: "Un Día (One Day)", 
+        artist: "J Balvin x Bad Bunny x Dua Lipa x Tainy", 
+        img: "music-201", 
+        src: "music-465", 
+    },
+                                                                                                                                                                                                              
+    { 
+        name: "EL CLúB", 
+        artist: "Bad Bunny", 
+        img: "music-199", 
+        src: "music-466", 
+    },
+                                                                                                                                                                                                              
+    { 
+        name: "Me Llueven (Extended Version)", 
+        artist: "Bad Bunny", 
+        img: "music-199", 
+        src: "music-467", 
+    },
+                                                                                                                                                                                                              
+    { 
+        name: "Me Llueven 2.0", 
+        artist: "Bad Bunny x Almighty x Quimico x Denyerkin x El Fother", 
+        img: "music-202", 
+        src: "music-468", 
+    },
+                                                                                                                                                                                                              
+    { 
+        name: "Me Llueven 3.0", 
+        artist: "Bad Bunny x Kevin Roldan x Noriel x Bryant Myers x Almighty", 
+        img: "music-203", 
+        src: "music-469", 
+    },
+                                                                                                                                                                                                              
+    { 
+        name: "Panamera (Remix)", 
+        artist: "Quimico x Bad Bunny x Black Jonas Point x Arcángel x Almighty", 
+        img: "music-204", 
+        src: "music-470", 
+    },
+                                                                                                                                                                                                              
+    { 
+        name: "Vamos Pa' La Calle", 
+        artist: "Bad Bunny ft Héctor El Father", 
+        img: "music-205", 
+        src: "music-471", 
+    },
+                                                                                                                                                                                                              
+    { 
+        name: "Yonaguni", 
+        artist: "Bad Bunny", 
+        img: "music-206", 
+        src: "music-472", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Desde el corazón", 
+        artist: "Bad Bunny", 
+        img: "music-10", 
+        src: "music-473", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Un ratito más", 
+        artist: "Bryant Myers ft Bad Bunny", 
+        img: "music-199", 
+        src: "music-474", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Netflixxx", 
+        artist: "Brytiago ft Bad Bunny", 
+        img: "music-207", 
+        src: "music-475", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Dura (Remix)", 
+        artist: "Daddy Yankee x Bad Bunny x Natti Natasha x Becky G", 
+        img: "music-208", 
+        src: "music-476", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Kemba Walker", 
+        artist: "Eladio Carrion ft Bad Bunny", 
+        img: "music-209", 
+        src: "music-477", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "El Baño", 
+        artist: "Enrique Iglesias ft Bad Bunny", 
+        img: "music-199", 
+        src: "music-478", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Sexto Sentido", 
+        artist: "Gigolo y La Exce ft Bad Bunny", 
+        img: "music-210", 
+        src: "music-479", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Un x100to", 
+        artist: "Grupo Frontera ft Bad Bunny", 
+        img: "music-199", 
+        src: "music-480", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Demonia Baila", 
+        artist: "Jantony x Bad Bunny x Brytiago", 
+        img: "music-199", 
+        src: "music-481", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "No me conoce (Remix)", 
+        artist: "Jhayco x Bad Bunny x J Balvin", 
+        img: "music-211", 
+        src: "music-482", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "No te hagas", 
+        artist: "Bad Bunny ft Jory Boy", 
+        img: "music-212", 
+        src: "music-483", 
+    },
     
+                                                                                                                                                                                                                  
+    { 
+        name: "Puerta Abierta", 
+        artist: "Juhn x Bad Bunny x Noriel", 
+        img: "music-213", 
+        src: "music-484", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Crecia", 
+        artist: "Justin Quiles x Bad Bunny x Almighty", 
+        img: "music-199", 
+        src: "music-485", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Ahora me llama", 
+        artist: "Karol G ft Bad Bunny", 
+        img: "music-197", 
+        src: "music-486", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Otra Vez", 
+        artist: "Kelmitt x Bad Bunny x Darell", 
+        img: "music-199", 
+        src: "music-487", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Un Polvo", 
+        artist: "Maluma x Bad Bunny x Arcángel x Ñengo Flow x De La Ghetto", 
+        img: "music-214", 
+        src: "music-488", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Bellacoso", 
+        artist: "Residente ft Bad Bunny", 
+        img: "music-199", 
+        src: "music-489", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Me llamas", 
+        artist: "Mark B x Bad Bunny x De La Ghetto x El Nene La Amenaza x Arcángel", 
+        img: "music-215", 
+        src: "music-490", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Estamos Clear", 
+        artist: "Miky Woodz ft Bad Bunny", 
+        img: "music-216", 
+        src: "music-491", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Adivino", 
+        artist: "Myke Towers ft Bad Bunny", 
+        img: "music-197", 
+        src: "music-492", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Amantes de una noche", 
+        artist: "Bad Bunny ft Natti Natasha", 
+        img: "music-217", 
+        src: "music-493", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Gato de Noche", 
+        artist: "Bad Bunny ft Ñengo Flow", 
+        img: "music-218", 
+        src: "music-494", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Subimos de rango", 
+        artist: "Omy de oro x Bad Bunny x Shootter Ledo", 
+        img: "music-197", 
+        src: "music-495", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Solita", 
+        artist: "Ozuna x Bad Bunny x Mambo Kingz x DJ Luian x Wisin x Almighty", 
+        img: "music-219", 
+        src: "music-496", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Lo siento BB:/", 
+        artist: "Tainy x Bad Bunny x Julieta Venegas", 
+        img: "music-197", 
+        src: "music-497", 
+    },
+                                                                                                                                                                                                                  
+    { 
+        name: "Mala y Peligrosa", 
+        artist: "Victor Manuelle ft Bad Bunny", 
+        img: "music-197", 
+        src: "music-498", 
+    },
+                                                                                                                                                                                                                      
+    { 
+        name: "Como Soy", 
+        artist: "Pacho x Daddy Yankee x Bad Bunny", 
+        img: "music-199", 
+        src: "music-499", 
+    },
+                                                                                                                                                                                                                      
+    { 
+        name: "Lean", 
+        artist: "Amenazzy x Bad Bunny x Lito Kirino", 
+        img: "music-222", 
+        src: "music-500", 
+    },
+                                                                                                                                                                                                                      
+    { 
+        name: "Gucci Gang (Spanish Remix)", 
+        artist: "Lil Pump x Bad Bunny x J Balvin x Ozuna", 
+        img: "music-199", 
+        src: "music-501", 
+    },
+                                                                                                                                                                                                                      
+    { 
+        name: "Gucci Gang (Remix)", 
+        artist: "Lil Pump x Bad Bunny x Gucci Mane x J Balvin x 21 Savage x Remy Ma x Ozuna x French Montana", 
+        img: "music-223", 
+        src: "music-502", 
+    },
+                                                                                                                                                                                                                      
+    { 
+        name: "Gucci Gang (Remix)", 
+        artist: "Lil Pump x Bad Bunny x Ozuna x J Balvin x French Montana x 21 Savage", 
+        img: "music-197", 
+        src: "music-503", 
+    },
+                                                                                                                                                                                                                      
+    { 
+        name: "Mojabi Ghost", 
+        artist: "Tainy ft Bad Bunny", 
+        img: "music-199", 
+        src: "music-504", 
+    },
+                                                                                                                                                                                                                      
+    { 
+        name: "PIToRRO DE COCO", 
+        artist: "Bad Bunny", 
+        img: "music-197", 
+        src: "music-505", 
+    },
+                                                                                                                                                                                                                      
+    { 
+        name: "Soy el diablo", 
+        artist: "Natanael Cano ft Bad Bunny", 
+        img: "music-224", 
+        src: "music-506", 
+    },
 ];
