@@ -196,44 +196,82 @@ function updatePlayingSong() {
 
 // Controles para la pestaña
 
-if ('mediaSession' in navigator) {
-    function updateMetadata() {
-        navigator.mediaSession.metadata = new MediaMetadata({
-            title: musicName.innerHTML,
-            artist: musicArtist.innerText,
-            album: '',
-            artwork: [
-                { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '96x96', type: 'image/jpeg' },
-                { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '128x128', type: 'image/jpeg' },
-                { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '192x192', type: 'image/jpeg' },
-                { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '256x256', type: 'image/jpeg' },
-                { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '384x384', type: 'image/jpeg' },
-                { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '512x512', type: 'image/jpeg' }
-            ]
-        });
-    }
+function initializeMediaSession() {
+    if ('mediaSession' in navigator) {
+        updateMetadata();
 
-    navigator.mediaSession.setActionHandler('play', playMusic);
-    navigator.mediaSession.setActionHandler('pause', pauseMusic);
-    navigator.mediaSession.setActionHandler('previoustrack', prevMusic);
-    navigator.mediaSession.setActionHandler('nexttrack', nextMusic);
-    navigator.mediaSession.setActionHandler('seekbackward', function() {
+        navigator.mediaSession.setActionHandler('play', playMusic);
+        navigator.mediaSession.setActionHandler('pause', pauseMusic);
+        navigator.mediaSession.setActionHandler('previoustrack', prevMusic);
+        navigator.mediaSession.setActionHandler('nexttrack', nextMusic);
+        navigator.mediaSession.setActionHandler('seekbackward', () => {
+            mainAudio.currentTime = Math.max(mainAudio.currentTime - 10, 0);
+        });
+        navigator.mediaSession.setActionHandler('seekforward', () => {
+            mainAudio.currentTime = Math.min(mainAudio.currentTime + 10, mainAudio.duration);
+        });
+    } else {
+        updateControlsForIOS();
+    }
+}
+
+function updateMetadata() {
+    navigator.mediaSession.metadata = new MediaMetadata({
+        title: document.getElementById('musicName').innerHTML,
+        artist: document.getElementById('musicArtist').innerText,
+        album: '',
+        artwork: [
+            { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '96x96', type: 'image/jpeg' },
+            { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '128x128', type: 'image/jpeg' },
+            { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '192x192', type: 'image/jpeg' },
+            { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '256x256', type: 'image/jpeg' },
+            { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '384x384', type: 'image/jpeg' },
+            { src: `img/${allMusic[musicIndex].img}.jpg`, sizes: '512x512', type: 'image/jpeg' }
+        ]
+    });
+}
+
+function updateControlsForIOS() {
+
+    const iosControls = document.createElement('div');
+    iosControls.innerHTML = `
+        <div class="ios-music-player">
+            <img src="img/${allMusic[musicIndex].img}.jpg" alt="Artwork" class="ios-artwork">
+            <div class="ios-details">
+                <span class="ios-title">${document.getElementById('musicName').innerHTML}</span>
+                <span class="ios-artist">${document.getElementById('musicArtist').innerText}</span>
+            </div>
+            <div class="ios-controls">
+                <button id="ios-prev">⏮️</button>
+                <button id="ios-play-pause">▶️/⏸️</button>
+                <button id="ios-next">⏭️</button>
+                <button id="ios-backward">⏪10s</button>
+                <button id="ios-forward">⏩10s</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(iosControls);
+
+    document.getElementById('ios-play-pause').addEventListener('click', () => {
+        if (mainAudio.paused) {
+            mainAudio.play();
+        } else {
+            mainAudio.pause();
+        }
+    });
+
+    document.getElementById('ios-prev').addEventListener('click', prevMusic);
+    document.getElementById('ios-next').addEventListener('click', nextMusic);
+    document.getElementById('ios-backward').addEventListener('click', () => {
         mainAudio.currentTime = Math.max(mainAudio.currentTime - 10, 0);
     });
-    navigator.mediaSession.setActionHandler('seekforward', function() {
+    document.getElementById('ios-forward').addEventListener('click', () => {
         mainAudio.currentTime = Math.min(mainAudio.currentTime + 10, mainAudio.duration);
     });
 }
 
-// Mantener la música en reproducción cuando la página no está visible
-document.addEventListener('visibilitychange', function() {
-    if (!document.hidden) {
-        if (wrapper.classList.contains("paused")) {
-            mainAudio.play();
-            imgArea.classList.add("playing");
-        }
-    }
-});
+document.addEventListener('DOMContentLoaded', initializeMediaSession);
+
 
 // Reproductor de música ______________________________________________________
 

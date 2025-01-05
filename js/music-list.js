@@ -658,7 +658,7 @@ let allMusic = [
     }, 
             
     { 
-        name: "Para ti", 
+        name: "Pa' ti", 
         artist: "Bad Bunny ft Bryant Myers", 
         img: "music-18", 
         src: "music-95", 
@@ -3264,8 +3264,8 @@ let allMusic = [
     },
                                                                                                                                                                                                               
     { 
-        name: "Me Llueven (Extended Version)", 
-        artist: "Bad Bunny", 
+        name: "Me Llueven", 
+        artist: "Bad Bunny x Poeta Callejero x Mark B", 
         img: "music-199", 
         src: "music-467", 
     },
@@ -3542,5 +3542,236 @@ let allMusic = [
         artist: "Natanael Cano ft Bad Bunny", 
         img: "music-224", 
         src: "music-506", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Si tu novio te deja sola", 
+        artist: "J Balvin ft Bad Bunny", 
+        img: "music-225", 
+        src: "music-507", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Dema Ga Ge Gi Go Gu", 
+        artist: "El Alfa ft Bad Bunny", 
+        img: "music-226", 
+        src: "music-508", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Krippy Kush", 
+        artist: "Farruko x Bad Bunny x Rvssian", 
+        img: "music-227", 
+        src: "music-509", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Prayer", 
+        artist: "Ez El Ezeta x Bad Bunny x Yomo x Almighty x I-Octane x Benny Benni x DJ Luian", 
+        img: "music-197", 
+        src: "music-510", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Haters", 
+        artist: "J Alvarez x Bad Bunny x Almighty", 
+        img: "music-199", 
+        src: "music-511", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Tranquilo", 
+        artist: "Kevin Roldan ft Bad Bunny", 
+        img: "music-228", 
+        src: "music-512", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Satisfacción", 
+        artist: "Nicky Jam x Bad Bunny x Arcángel", 
+        img: "music-197", 
+        src: "music-513", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Te lo meto yo", 
+        artist: "Pepe Quintana x Bad Bunny x Arcángel x Farruko x Lary Over x Tempo", 
+        img: "music-229", 
+        src: "music-514", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Amigos y enemigos", 
+        artist: "Noriel x Almighty x Bad Bunny", 
+        img: "music-230", 
+        src: "music-515", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Si tú lo dejas", 
+        artist: "Rvssian x Bad Bunny x Farruko x Nicky Jam x King Kosa", 
+        img: "music-231", 
+        src: "music-516", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Vuelve", 
+        artist: "Daddy Yankee ft Bad Bunny", 
+        img: "music-232", 
+        src: "music-517", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Caile", 
+        artist: "Revol x Bad Bunny x Zion x De La Ghetto x Bryant Myers", 
+        img: "music-233", 
+        src: "music-518", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Explícale (Remix)", 
+        artist: "Yandel x Bad Bunny x Cosculluela x Brytiago x Noriel", 
+        img: "music-234", 
+        src: "music-519", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Infeliz", 
+        artist: "Arcángel ft Bad Bunny", 
+        img: "music-197", 
+        src: "music-520", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Madura", 
+        artist: "Cosculluela ft Bad Bunny", 
+        img: "music-245", 
+        src: "music-521", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Original", 
+        artist: "Arcángel ft Bad Bunny", 
+        img: "music-235", 
+        src: "music-522", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Dime", 
+        artist: "Revol x Bad Bunny x J Balvin x Arcángel x De La Ghetto", 
+        img: "music-236", 
+        src: "music-523", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Sensualidad", 
+        artist: "Bad Bunny x Prince Royce x J Balvin x Mambo Kingz x DJ Luian", 
+        img: "music-237", 
+        src: "music-524", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Loca (Remix)", 
+        artist: "Khea x Bad Bunny x Duki x Cazzu", 
+        img: "music-238", 
+        src: "music-525", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Favorito de los capos (Remix)", 
+        artist: "Arcángel x Bad Bunny x Flow Mafia", 
+        img: "music-239", 
+        src: "music-526", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Trepate", 
+        artist: "Sixto Rein x Bad Bunny x Lary Over", 
+        img: "music-240", 
+        src: "music-527", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "La cartera", 
+        artist: "Farruko ft Bad Bunny", 
+        img: "music-241", 
+        src: "music-528", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Dame algo", 
+        artist: "Wisin & Yandel ft Bad Bunny", 
+        img: "music-197", 
+        src: "music-529", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Move Your body", 
+        artist: "Wisin x Bad Bunny x Timbaland", 
+        img: "music-242", 
+        src: "music-530", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Te descuidó", 
+        artist: "Barbosa x Bad Bunny x Bryant Myers", 
+        img: "music-197", 
+        src: "music-531", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Está rico", 
+        artist: "Marc Anthony x Bad Bunny x Will Smith", 
+        img: "music-199", 
+        src: "music-532", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Give It Up", 
+        artist: "BreakFast N Vegas x Bad Bunny x Messiah x Tory Lanez x DJ Yonny", 
+        img: "music-243", 
+        src: "music-533", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Fantasía", 
+        artist: "Alex Sensation ft Bad Bunny", 
+        img: "music-244", 
+        src: "music-534", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Coronamos (Remix)", 
+        artist: "El taiger x Bad Bunny x Cosculluela x J Balvin x Bryant Myers", 
+        img: "music-199", 
+        src: "music-535", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Báilame (Remix)", 
+        artist: "Nacho x Bad Bunny x Yandel", 
+        img: "music-246", 
+        src: "music-536", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Krippy Kush (Remix)", 
+        artist: "Farruko x Bad Bunny x Nicki Minaj x Travis Scott x Rvssian", 
+        img: "music-199", 
+        src: "music-537", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "Andan por ahí", 
+        artist: "Revol x Bad Bunny x Wisin x Cosculluela x Ozuna x Farruko x Nicky Jam x Ñengo Flow", 
+        img: "music-247", 
+        src: "music-538", 
+    },
+                                                                                                                                                                                                                          
+    { 
+        name: "I Like It", 
+        artist: "Cardi B x Bad Bunny x J Balvin", 
+        img: "music-197", 
+        src: "music-539", 
     },
 ];

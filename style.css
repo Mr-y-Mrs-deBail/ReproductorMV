@@ -30,6 +30,54 @@ body {
     background-color: black; 
 }
 
+.ios-music-player {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.ios-artwork {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.ios-details {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.ios-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.ios-artist {
+    font-size: 14px;
+    color: gray;
+}
+
+.ios-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.ios-controls button {
+    padding: 10px 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+.ios-controls button:active {
+    background-color: #45a049;
+}
+
+
 /* Reproductor de música principal */
 
 .wrapper { 
