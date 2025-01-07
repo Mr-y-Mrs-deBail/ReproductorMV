@@ -238,7 +238,7 @@ let allMusic = [
     },
                         
     { 
-        name: "Soliá", 
+        name: "Solía", 
         artist: "Bad Bunny", 
         img: "music-8", 
         src: "music-35", 
@@ -3533,7 +3533,7 @@ let allMusic = [
     { 
         name: "PIToRRO DE COCO", 
         artist: "Bad Bunny", 
-        img: "music-197", 
+        img: "music-193", 
         src: "music-505", 
     },
                                                                                                                                                                                                                       
@@ -3773,5 +3773,131 @@ let allMusic = [
         artist: "Cardi B x Bad Bunny x J Balvin", 
         img: "music-197", 
         src: "music-539", 
+    },
+                                                                                                                                                                                                                              
+    { 
+        name: "Hoy", 
+        artist: "Ñengo Flow ft Bad Bunny", 
+        img: "music-248", 
+        src: "music-540", 
+    },
+                                                                                                                                                                                                                              
+    { 
+        name: "Mayores", 
+        artist: "Becky G ft Bad Bunny", 
+        img: "music-197", 
+        src: "music-541", 
+    },
+                                                                                                                                                                                                                              
+    { 
+        name: "NUEVAYoL", 
+        artist: "Bad Bunny", 
+        img: "music-193", 
+        src: "music-542", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "VoY A LLeVARTE PA PR", 
+        artist: "Bad Bunny", 
+        img: "music-193", 
+        src: "music-543", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "BAILE INoLVIDABLE", 
+        artist: "Bad Bunny", 
+        img: "music-193", 
+        src: "music-544", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "Perfumito Nuevo", 
+        artist: "Bad Bunny ft RaiNao", 
+        img: "music-193", 
+        src: "music-545", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "VeLDÁ", 
+        artist: "Bad Bunny X Dei V x Omar Courtz", 
+        img: "music-193", 
+        src: "music-546", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "KETU TeCRÉ", 
+        artist: "Bad Bunny", 
+        img: "music-193", 
+        src: "music-547", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "BOKeTE", 
+        artist: "Bad Bunny", 
+        img: "music-193", 
+        src: "music-548", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "KLOuFRENS", 
+        artist: "Bad Bunny", 
+        img: "music-193", 
+        src: "music-549", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "Turista", 
+        artist: "Bad Bunny", 
+        img: "music-193", 
+        src: "music-550", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "Café con ron", 
+        artist: "Bad Bunny ft Pleneros de la Cresta", 
+        img: "music-193", 
+        src: "music-551", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "Lo que le pasó a Hawaii", 
+        artist: "Bad Bunny", 
+        img: "music-193", 
+        src: "music-552", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "EoO", 
+        artist: "Bad Bunny", 
+        img: "music-193", 
+        src: "music-553", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "DtMF", 
+        artist: "Bad Bunny", 
+        img: "music-193", 
+        src: "music-554", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "LA MuDANZA", 
+        artist: "Bad Bunny", 
+        img: "music-193", 
+        src: "music-555", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "WELTiTA", 
+        artist: "Bad Bunny ft Chuwi", 
+        img: "music-193", 
+        src: "music-556", 
+    },
+                                                                                                                                                                                                                                  
+    { 
+        name: "Ahora me llama (Remix)", 
+        artist: "Karol G x Bad Bunny x Quavo", 
+        img: "music-249", 
+        src: "music-557", 
     },
 ];

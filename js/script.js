@@ -1,50 +1,23 @@
-// Buscador ______________________________________________________
+// Buscador
 
-document.getElementById("more-options").addEventListener("click", function() {
-    var dropdownContent = document.querySelector(".dropdown-content");
-    var icon = document.getElementById("more-options");
-
-    if (dropdownContent.classList.contains("show")) {
-        dropdownContent.classList.remove("show");
-        dropdownContent.classList.add("hide");
-        icon.classList.remove("transform");
-        icon.innerText = "more_horiz";
-    } else {
-        dropdownContent.classList.remove("hide");
-        dropdownContent.classList.add("show");
-        icon.classList.add("transform");
-        icon.innerText = "close";
-    }
+document.getElementById("search-option").addEventListener("click", function(event) {
+    event.preventDefault();
+    document.querySelector(".search-container-principal").style.display = 'flex';
+    document.getElementById("search-option").style.display = 'none';
+    document.getElementById("close-search").style.display = 'block';
 });
 
-window.onclick = function(event) {
-    if (!event.target.matches('.material-icons')) {
-        var dropdowns = document.getElementsByClassName("dropdown-content");
-        for (var i = 0; i < dropdowns.length; i++) {
-            var openDropdown = dropdowns[i];
-            if (openDropdown.classList.contains('show')) {
-                openDropdown.classList.remove('show');
-                openDropdown.classList.add("hide");
-                document.getElementById("more-options").classList.remove("transform");
-                document.getElementById("more-options").innerText = "more_horiz";
-            }
-        }
-    }
-}
-
-document.getElementById("search-option").addEventListener("click", function() {
-    document.querySelector(".wrapper").classList.add("show-search");
-});
+// Cerrar el campo de búsqueda al hacer click
 
 document.getElementById("close-search").addEventListener("click", function() {
-    document.querySelector(".wrapper").classList.remove("show-search");
-    document.getElementById("search-input-principal").value = ''; // Limpiar el campo de búsqueda
-    document.getElementById("suggestions-container-principal").style.display = 'none'; // Ocultar sugerencias
+    document.querySelector(".search-container-principal").style.display = 'none';
+    document.getElementById("search-option").style.display = 'block';
+    document.getElementById("close-search").style.display = 'none';
+    document.getElementById("search-input-principal").value = '';
+    document.getElementById("suggestions-container-principal").style.display = 'none';
 });
 
-
-// Debounce Function ______________________________________________________
-
+// Función de debounce
 function debounce(func, delay) {
     let timer;
     return function(...args) {
@@ -53,7 +26,7 @@ function debounce(func, delay) {
     };
 }
 
-// Throttle Function
+// Función de throttle
 function throttle(func, limit) {
     let lastFunc;
     let lastRan;
@@ -73,8 +46,7 @@ function throttle(func, limit) {
     };
 }
 
-// Apply debounce and throttle to events
-
+// Aplicar debounce y throttle a eventos
 window.addEventListener('resize', debounce(function() {
     console.log('Resized');
 }, 200));
@@ -83,15 +55,12 @@ document.addEventListener('scroll', throttle(function() {
     console.log('Scrolled');
 }, 100));
 
-
-// Función para remover acentos ______________________________________________________
-
+// Función para remover acentos
 function removeAccents(str) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
-// Buscar canciones ______________________________________________________
-
+// Buscar canciones
 document.getElementById("search-input-principal").addEventListener("input", debounce(function() {
     const searchQuery = removeAccents(this.value.toLowerCase());
     const suggestionsContainer = document.getElementById("suggestions-container-principal");
@@ -112,14 +81,20 @@ document.getElementById("search-input-principal").addEventListener("input", debo
             const suggestionItem = document.createElement('div');
             suggestionItem.classList.add('suggestion-item');
 
-            // Resaltar la canción actual si está en la lista filtrada
             if (isCurrentSong(song.name, song.artist)) {
                 suggestionItem.innerHTML = `<strong>${song.name} - ${song.artist}</strong>`;
             } else {
                 suggestionItem.innerHTML = `${song.name} - ${song.artist}`;
             }
 
-            suggestionItem.addEventListener("click", () => selectSongByName(song.name, song.artist));
+            suggestionItem.addEventListener("click", () => {
+                selectSongByName(song.name, song.artist);
+
+                document.querySelector(".search-container-principal").style.display = 'none';
+                document.getElementById("search-option").style.display = 'block';
+                document.getElementById("close-search").style.display = 'none';
+            });
+
             suggestionsContainer.appendChild(suggestionItem);
         });
         suggestionsContainer.style.display = 'block';
@@ -133,11 +108,11 @@ function selectSongByName(songName, songArtist) {
     if (songIndex !== -1) {
         musicIndex = songIndex;
         loadMusic(musicIndex);
-        playMusic();
+        playMusic(); 
         updatePlayingSong();
         document.querySelector(".wrapper").classList.remove("show-search");
-        document.getElementById("suggestions-container-principal").style.display = 'none';
-        document.getElementById("search-input-principal").value = ''; // Limpiar el campo de búsqueda
+        document.getElementById("suggestions-container-principal").style.display = 'none'; 
+        document.getElementById("search-input-principal").value = ''; 
     }
 }
 
@@ -145,8 +120,7 @@ function isCurrentSong(songName, songArtist) {
     return removeAccents(musicName.innerHTML.toLowerCase()).includes(removeAccents(songName.toLowerCase())) && removeAccents(musicArtist.innerText.toLowerCase()).includes(removeAccents(songArtist.toLowerCase()));
 }
 
-// Actualizar la canción en reproducción ______________________________________________________
-
+// Actualiza la canción en reproducción
 function updatePlayingSong() {
     const allLiTags = ulTag.querySelectorAll("li");
 
@@ -175,13 +149,13 @@ function updatePlayingSong() {
         }
     }
 
-    // Actualizar sugerencias en el buscador
+    
     const suggestionsContainer = document.getElementById("suggestions-container");
     if (suggestionsContainer) {
         const suggestionItems = suggestionsContainer.querySelectorAll(".suggestion-item");
         suggestionItems.forEach((item) => {
             item.classList.remove("playing");
-            item.innerHTML = item.innerText; // Restablecer el estilo por defecto
+            item.innerHTML = item.innerText;
         });
 
         const currentSuggestionItem = suggestionsContainer.querySelector(`.suggestion-item[li-index="${musicIndex + 1}"]`);
