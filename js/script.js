@@ -168,6 +168,8 @@ function updatePlayingSong() {
     }
 }
 
+// Controles de la pestaña
+
 if ('mediaSession' in navigator) {
     function updateMetadata() {
         navigator.mediaSession.metadata = new MediaMetadata({
@@ -399,6 +401,7 @@ function shuffleMusic() {
 }
 
 function preloadNextSongs() {
+
     // Precargar las siguientes canciones
     const nextSetOfSongs = allMusic.slice(loadedSongs, loadedSongs + increment);
     nextSetOfSongs.forEach((song) => {
@@ -421,7 +424,7 @@ function updateProgress(e) {
     progressBar.style.width = `${progressPercentage}%`;
 }
 
-// Mouse Events
+// Mouse Eventos
 progressArea.addEventListener('mousedown', (e) => {
     isDragging = true;
     updateProgress(e);
@@ -441,7 +444,7 @@ progressArea.addEventListener('mouseleave', () => {
     isDragging = false;
 });
 
-// Touch Events
+// Touch Eventos
 progressArea.addEventListener('touchstart', (e) => {
     isDragging = true;
     updateProgress(e);
@@ -460,7 +463,7 @@ progressArea.addEventListener('touchend', () => {
 // Lista de canciones ______________________________________________________
 
 const gifNames = ["baile", "baile2", "baile3", "baile4", "baile5", "baile6", "baile7", "baile8", "baile9"];
-const alphabet = ["#", ... "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("")];
+const alphabet = ["#", ... "ABCDEFGHIJKLMNOPQRSTUVWXY".split("")];
 const backToAlphabetBtn = document.getElementById('back-to-alphabet');
 
 function changeGif() {
@@ -474,6 +477,7 @@ moreMusicBtn.addEventListener("click", () => {
     changeGif();
     document.querySelector(".alphabet-list").style.display = "block";
     musicList.classList.add("show");
+    backToAlphabetBtn.classList.add("hidden"); 
 });
 
 backToAlphabetBtn.addEventListener("click", () => {
@@ -486,6 +490,7 @@ closeMoreMusic.addEventListener("click", () => {
 
 function closeMusicList() {
     musicList.classList.remove("show");
+    backToAlphabetBtn.classList.add("hidden"); 
 }
 
 function loadSongsByLetter(letter) {
@@ -516,14 +521,25 @@ function loadSongsByLetter(letter) {
         ulTag.innerHTML = "<li>Ups hubo un error amor</li>";
     }
 
-    updatePlayingSong(); 
+    updatePlayingSong();
+    backToAlphabetBtn.classList.remove("hidden"); // Mostrar el icono de regreso cuando estamos en la lista de canciones
+}
+
+// Función para mostrar la lista del abecedario ______________________________________________________
+
+function showAlphabetList() {
+    ulTag.innerHTML = "";
+    document.querySelector(".alphabet-list").style.display = "block"; // lista del abecedario
+    musicList.classList.add("show");
+    loadAlphabet();
+    backToAlphabetBtn.classList.add("hidden"); 
 }
 
 // Abecedario y conteo de canciones ______________________________________________________
 
 function loadAlphabet() {
     const alphabetList = document.getElementById('alphabet');
-    alphabetList.innerHTML = ''; // Limpiar la lista del abecedario
+    alphabetList.innerHTML = '';
 
     alphabet.forEach(letter => {
         let songCount;
@@ -537,8 +553,6 @@ function loadAlphabet() {
     });
 }
 
-// Función para seleccionar una canción ______________________________________________________
-
 function selectSong(element) {
     const songIndex = allMusic.findIndex(song => song.name === element.querySelector('span').innerText);
     if (songIndex !== -1) {
@@ -546,6 +560,7 @@ function selectSong(element) {
         loadMusic(musicIndex);
         playMusic();
         updatePlayingSong();
+        backToAlphabetBtn.classList.remove("hidden"); // Muestra el icono de regreso cuando estamos en la lista de canciones
     }
 }
 
@@ -553,7 +568,6 @@ function selectSong(element) {
 
 function updatePlayingSong() {
     const allLiTags = ulTag.querySelectorAll("li");
-    const alphabetLinks = document.querySelectorAll("#alphabet li a");
 
     // Limpiar la clase 'playing' y los estilos de negrita
     allLiTags.forEach((li) => {
@@ -565,15 +579,6 @@ function updatePlayingSong() {
         }
         if (artistTag) {
             artistTag.style.fontWeight = "normal";
-        }
-    });
-
-    alphabetLinks.forEach(link => {
-        link.style.fontWeight = "normal";
-        const letter = link.innerText.charAt(0);
-        const count = document.getElementById(`count-${letter}`);
-        if (count) {
-            count.style.fontWeight = "normal";
         }
     });
 
@@ -590,26 +595,14 @@ function updatePlayingSong() {
             currentArtistTag.style.fontWeight = "bold";
         }
     }
-
-    const suggestionsContainer = document.getElementById("suggestions-container");
-    if (suggestionsContainer) {
-        const suggestionItems = suggestionsContainer.querySelectorAll(".suggestion-item");
-        suggestionItems.forEach((item) => {
-            item.classList.remove("playing");
-            item.innerHTML = item.innerText;
-        });
-
-        const currentSuggestionItem = suggestionsContainer.querySelector(`.suggestion-item[li-index="${musicIndex + 1}"]`);
-        if (currentSuggestionItem) {
-            currentSuggestionItem.classList.add("playing");
-            const songName = musicName.innerHTML;
-            const songArtist = musicArtist.innerText;
-            currentSuggestionItem.innerHTML = `<strong>${songName} - ${songArtist}</strong>`;
-        }
-    }
 }
 
-// Evento de carga para inicializar el abecedario
-window.addEventListener('load', loadAlphabet);
 
-// ...
+// Cargar el abecedario ______________________________________________________
+
+window.addEventListener('load', () => {
+    document.querySelector(".alphabet-list").style.display = "none";
+    musicList.classList.remove("show"); 
+    loadAlphabet(); 
+    backToAlphabetBtn.classList.add("hidden");
+});

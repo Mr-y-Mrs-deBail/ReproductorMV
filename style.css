@@ -55,12 +55,6 @@ body {
     position: relative;
 }
 
-.lupa {
-    font-size: 25px !important;
-    color: var(--white) !important;
-    transition: all 0.5s ease;
-}
-
 /* Buscador principal */
 
 .search-container-principal {
@@ -156,9 +150,10 @@ body {
 }
 
 .top-bar span { 
-    font-size: 18px; 
-    margin-left: -3px; 
-    color: var(--dark); 
+    font-size: 28px; 
+    margin-left: 265px;    
+    color: var(--white); 
+    transition: all 0.5s ease;
 }
 
 .img-area {
@@ -371,6 +366,10 @@ body {
     color: var(--white);
     font-weight: bold;
     margin-left: -20px;
+}
+
+.hidden {
+    display: none;
 }
 
 .music-list ul { 
