@@ -594,8 +594,11 @@ function updatePlayingSong() {
         if (currentArtistTag) {
             currentArtistTag.style.fontWeight = "bold";
         }
+    } else {
+        console.log("Elemento no encontrado: ", `li[li-index="${musicIndex + 1}"]`);
     }
 }
+
 
 
 // Cargar el abecedario ______________________________________________________

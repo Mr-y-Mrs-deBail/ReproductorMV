@@ -3900,4 +3900,81 @@ let allMusic = [
         img: "music-249", 
         src: "music-557", 
     },
+                                                                                                                                                                                                                                      
+    { 
+        name: "AM (Remix)", 
+        artist: "Nio Garcia x Bad Bunny x J Balvin", 
+        img: "music-250", 
+        src: "music-558", 
+    },
+                                                                                                                                                                                                                                      
+    { 
+        name: "Qué pasaría", 
+        artist: "Rauw Alejandro ft Bad Bunny", 
+        img: "music-197", 
+        src: "music-559", 
+    },
+                                                                                                                                                                                                                                      
+    { 
+        name: "Volando (Remix)", 
+        artist: "Mora x Bad Bunny x Sech", 
+        img: "music-251", 
+        src: "music-560", 
+    },
+                                                                                                                                                                                                                                          
+    { 
+        name: "X última vez", 
+        artist: "Daddy Yankee ft Bad Bunny", 
+        img: "music-197", 
+        src: "music-561", 
+    },
+                                                                                                                                                                                                                                          
+    { 
+        name: "Coco Chanel", 
+        artist: "Eladio Carrión ft Bad Bunny", 
+        img: "music-199", 
+        src: "music-562", 
+    },
+                                                                                                                                                                                                                                          
+    { 
+        name: "K-POP", 
+        artist: "Travis Scott x Bad Bunny x The Weeknd", 
+        img: "music-252", 
+        src: "music-563", 
+    },
+                                                                                                                                                                                                                                          
+    { 
+        name: "Gently", 
+        artist: "Drake ft Bad Bunny", 
+        img: "music-253", 
+        src: "music-564", 
+    },
+                                                                                                                                                                                                                                          
+    { 
+        name: "Tormenta", 
+        artist: "Gorillaz ft Bad Bunny", 
+        img: "music-254", 
+        src: "music-565", 
+    },
+                                                                                                                                                                                                                                          
+    { 
+        name: "Loyal", 
+        artist: "PARTYNEXTDOOR x Bad Bunny x Drake", 
+        img: "music-255", 
+        src: "music-566", 
+    },
+                                                                                                                                                                                                                                          
+    { 
+        name: "Escápate conmigo (Remix)", 
+        artist: "Wisin x Bad Bunny x Ozuna x De La Ghetto x Arcángel x Noriel x Almighty", 
+        img: "music-256", 
+        src: "music-567", 
+    },
+                                                                                                                                                                                                                                          
+    { 
+        name: "El amante", 
+        artist: "Nicky Jam x Bad Bunny x Ozuna", 
+        img: "music-257", 
+        src: "music-568", 
+    },
 ];
