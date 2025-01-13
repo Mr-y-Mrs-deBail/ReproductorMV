@@ -148,7 +148,6 @@ function updatePlayingSong() {
             currentArtistTag.style.fontWeight = "bold";
         }
     }
-
     
     const suggestionsContainer = document.getElementById("suggestions-container");
     if (suggestionsContainer) {
@@ -240,7 +239,8 @@ let isMusicPaused = true;
 let isShuffle = false;
 let playedSongs = []; // Registro de canciones reproducidas
 let preloadedSongs = []; // Registro de canciones precargadas
-const increment = 50; // Numero de canciones a cargar progresivamente
+const increment = 50; // Número de canciones a cargar progresivamente
+let loadedSongs = 0; // Control del número de canciones cargadas
 
 // Ordena alfabéticamente los nombres de las canciones
 allMusic.sort((a, b) => a.name.localeCompare(b.name));
@@ -249,7 +249,7 @@ window.addEventListener("load", () => {
     loadMusic(musicIndex);
     updatePlayingSong();
     displayAllSongs();
-    updateMetadata();  // Actualizar metadata al cargar
+    updateMetadata();  // Actualiza la metadata al cargar
     preloadNextSongs(); // Precargar las próximas canciones
 });
 
@@ -260,20 +260,21 @@ function loadMusic(index) {
         mainAudio.load();
     }
 
-    // Cargar solo la imagen si no está previamente cargada
+    // Carga solo la imagen si no está previamente cargada
     const song = allMusic[index];
     const formattedName = song.name.replace(/ - /g, ' <br> ');
     musicName.innerHTML = formattedName;
     musicArtist.innerText = song.artist;
-    if (musicImg.src !== `img/${song.img}.jpg`) {
-        musicImg.src = `img/${song.img}.jpg`;
+    if (musicImg.dataset.src !== `img/${song.img}.jpg`) {
+        musicImg.dataset.src = `img/${song.img}.jpg`;
+        lazyLoadImage(musicImg); // Aplicar lazy loading
     }
     mainAudio.src = `music/${song.src}.mp3`;
     updateMetadata(); // Actualizar metadata al cargar
 }
 
 function playMusic() {
-    if (mainAudio.src) {
+    if (mainAudio.src && mainAudio.paused) {
         wrapper.classList.add("paused");
         playPauseBtn.querySelector("i").innerText = "pause";
         mainAudio.play();
@@ -283,14 +284,16 @@ function playMusic() {
 }
 
 function pauseMusic() {
-    wrapper.classList.remove("paused");
-    playPauseBtn.querySelector("i").innerText = "play_arrow";
-    mainAudio.pause();
-    imgArea.classList.remove("playing");
+    if (!mainAudio.paused) {
+        wrapper.classList.remove("paused");
+        playPauseBtn.querySelector("i").innerText = "play_arrow";
+        mainAudio.pause();
+        imgArea.classList.remove("playing");
+    }
 }
 
 playPauseBtn.addEventListener("click", () => {
-    const isPlaying = wrapper.classList.contains("paused");
+    const isPlaying = !mainAudio.paused;
     isPlaying ? pauseMusic() : playMusic();
 });
 
@@ -299,7 +302,7 @@ nextBtn.addEventListener("click", nextMusic);
 
 function prevMusic() {
     if (isShuffle) {
-        playedSongs.pop(); // Remover la canción actual del historial
+        playedSongs.pop();
     }
     musicIndex = (musicIndex - 1 + allMusic.length) % allMusic.length;
     loadMusic(musicIndex);
@@ -317,7 +320,7 @@ function nextMusic() {
         updatePlayingSong();
     }
 
-    // Precargar más canciones si llegamos al final del buffer actual
+    // Precargar más canciones si llegamos al final
     if (musicIndex % increment === 0 && musicIndex > 0 && loadedSongs < allMusic.length) {
         preloadNextSongs();
     }
@@ -348,7 +351,9 @@ progressArea.addEventListener("click", (e) => {
     const clickedOffsetX = e.offsetX;
     const newTime = (clickedOffsetX / progressWidth) * mainAudio.duration;
     mainAudio.currentTime = newTime;
-    playMusic();
+    if (!mainAudio.paused) {
+        playMusic();
+    }
     updatePlayingSong();
 });
 
@@ -401,15 +406,39 @@ function shuffleMusic() {
 }
 
 function preloadNextSongs() {
-
     // Precargar las siguientes canciones
     const nextSetOfSongs = allMusic.slice(loadedSongs, loadedSongs + increment);
     nextSetOfSongs.forEach((song) => {
-        const audio = new Audio(`music/${song.src}.mp3`);
+        const audio = new Audio();
+        audio.src = `music/${song.src}.mp3`;
+        audio.addEventListener("canplaythrough", () => {
+            console.log(`Precargada: ${song.name}`);
+        }, { once: true });
         preloadedSongs.push(audio);
     });
     loadedSongs += increment;
 }
+
+// Lazy Loading para imágenes ______________________________________________________
+
+function lazyLoadImage(imageElement) {
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.dataset.src;
+                observer.unobserve(img);
+            }
+        });
+    });
+
+    observer.observe(imageElement);
+}
+
+mainAudio.addEventListener("error", (e) => {
+    console.error("Hay un error al cargar la canción amor:", e);
+    nextMusic();
+});
 
 // Mouse ______________________________________________________
 
@@ -436,8 +465,12 @@ progressArea.addEventListener('mousemove', (e) => {
     }
 });
 
-progressArea.addEventListener('mouseup', () => {
+progressArea.addEventListener('mouseup', (e) => {
     isDragging = false;
+    updateProgress(e);
+    if (!mainAudio.paused) {
+        playMusic();
+    }
 });
 
 progressArea.addEventListener('mouseleave', () => {
@@ -448,17 +481,45 @@ progressArea.addEventListener('mouseleave', () => {
 progressArea.addEventListener('touchstart', (e) => {
     isDragging = true;
     updateProgress(e);
-});
+}, { passive: true });
+
+progressArea.addEventListener('touchstart', (e) => {
+    isDragging = true;
+    updateProgress(e);
+}, { passive: true });
 
 progressArea.addEventListener('touchmove', (e) => {
     if (isDragging) {
         updateProgress(e);
     }
-});
+}, { passive: true });
 
-progressArea.addEventListener('touchend', () => {
+progressArea.addEventListener('touchend', (e) => {
     isDragging = false;
-});
+    updateProgress(e);
+    if (!mainAudio.paused) {
+        playMusic();
+    }
+}, { passive: true });
+
+// Evento de scroll con throttle y pasivo
+document.addEventListener('scroll', throttle(function() {
+    console.log('Scrolled');
+}, 100), { passive: true });
+
+// Throttle function
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
 
 // Lista de canciones ______________________________________________________
 
@@ -564,42 +625,22 @@ function selectSong(element) {
     }
 }
 
-// Función bold ______________________________________________________
-
 function updatePlayingSong() {
     const allLiTags = ulTag.querySelectorAll("li");
 
-    // Limpiar la clase 'playing' y los estilos de negrita
+    // Limpiar la clase 'playing'
     allLiTags.forEach((li) => {
         li.classList.remove("playing");
-        const nameTag = li.querySelector("span");
-        const artistTag = li.querySelector("p");
-        if (nameTag) {
-            nameTag.style.fontWeight = "normal";
-        }
-        if (artistTag) {
-            artistTag.style.fontWeight = "normal";
-        }
     });
 
     // Resaltar la canción actualmente en reproducción
     const currentLi = ulTag.querySelector(`li[li-index="${musicIndex + 1}"]`);
     if (currentLi) {
         currentLi.classList.add("playing");
-        const currentNameTag = currentLi.querySelector("span");
-        const currentArtistTag = currentLi.querySelector("p");
-        if (currentNameTag) {
-            currentNameTag.style.fontWeight = "bold";
-        }
-        if (currentArtistTag) {
-            currentArtistTag.style.fontWeight = "bold";
-        }
     } else {
         console.log("Elemento no encontrado: ", `li[li-index="${musicIndex + 1}"]`);
     }
 }
-
-
 
 // Cargar el abecedario ______________________________________________________
 
