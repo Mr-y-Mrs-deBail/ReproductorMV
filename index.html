@@ -18,7 +18,6 @@
     <meta property="twitter:title" content="ReproductorMV" />
     <meta property="twitter:description" content="Escucha tu linda música, libre de anuncios Uyyyy." />
     <meta property="twitter:image" content="https://i.pinimg.com/736x/6b/bf/e3/6bbfe31236bb551b7e6d260b7919c04f.jpg" />
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="style.css">
@@ -118,26 +117,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
-    
-    <script> 
-        document.addEventListener('DOMContentLoaded', (event) => { 
-            Swal.fire({ 
-                title: 'Amor', 
-                text: '¿Podrías permitir la reproducción automática de música en Safari?🎶',                
-                icon: 'info', 
-                background: '#000',
-                color: 'white',
-                showCancelButton: true, 
-                confirmButtonText: 'Permitir', 
-                cancelButtonText: 'No', 
-                }).then((result) => { 
-                    if (result.isConfirmed) 
-                    { document.getElementById('main-audio').play(); 
-                } 
-            }); 
-        }); 
-    </script>
 
 </body>
 </html>
